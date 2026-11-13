@@ -4,7 +4,10 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-// Load environment variables
+// ==========================================
+// ENVIRONMENT CONFIGURATION
+// ==========================================
+
 dotenv.config({
   path: path.join(__dirname, ".env")
 });
@@ -13,23 +16,38 @@ if (!process.env.MONGO_URI) {
   dotenv.config();
 }
 
+// ==========================================
+// IMPORTS
+// ==========================================
+
 const connectDB = require("./config/db");
 
 const app = express();
 
-// Allowed frontend origins
+// ==========================================
+// ALLOWED FRONTEND ORIGINS
+// ==========================================
+
 const allowedOrigins = [
-  "https://member-pass-psi.vercel.app/",
+  "https://member-pass-psi.vercel.app",
   "http://localhost:5173",
   "http://127.0.0.1:5173"
 ];
 
-// CORS configuration
+// ==========================================
+// CORS CONFIGURATION
+// ==========================================
+
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests without an Origin header
-    // and requests from approved frontend URLs
-    if (!origin || allowedOrigins.includes(origin)) {
+
+    // Allow requests without Origin header
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    // Allow approved frontend origins
+    if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
@@ -55,23 +73,42 @@ const corsOptions = {
   ],
 
   credentials: true,
+
   optionsSuccessStatus: 204
 };
 
-// Middleware
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// ==========================================
+// MIDDLEWARE
+// ==========================================
 
-// API Routes
+app.use(cors(corsOptions));
+
+app.use(express.json());
+
+app.use(express.urlencoded({
+  extended: true
+}));
+
+// ==========================================
+// API ROUTES
+// ==========================================
+
 app.use("/api/auth", require("./routes/authRoutes"));
+
 app.use("/api/plans", require("./routes/planRoutes"));
+
 app.use("/api/payments", require("./routes/paymentRoutes"));
+
 app.use("/api/member", require("./routes/memberRoutes"));
+
 app.use("/api/qr", require("./routes/qrRoutes"));
+
 app.use("/api/ai", require("./routes/aiRoutes"));
 
-// Home Route
+// ==========================================
+// HOME ROUTE
+// ==========================================
+
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
@@ -79,15 +116,22 @@ app.get("/", (req, res) => {
   });
 });
 
-// Health Check Route
+// ==========================================
+// HEALTH CHECK ROUTE
+// ==========================================
+
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "MemberPass server is running"
+    message: "MemberPass server is running",
+    frontend: "https://member-pass-psi.vercel.app"
   });
 });
 
-// 404 Handler
+// ==========================================
+// 404 HANDLER
+// ==========================================
+
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -95,7 +139,10 @@ app.use((req, res) => {
   });
 });
 
-// Error Handler
+// ==========================================
+// ERROR HANDLER
+// ==========================================
+
 app.use((err, req, res, next) => {
   console.error("Server Error:", err.message);
 
@@ -112,23 +159,46 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start Server
+// ==========================================
+// START SERVER
+// ==========================================
+
 const startServer = async () => {
   try {
+
     await connectDB();
 
     const PORT = process.env.PORT || 5000;
 
     app.listen(PORT, () => {
+
       console.log(`Server running on port ${PORT}`);
-      console.log("CORS enabled for:");
+
+      console.log("--------------------------------");
+
+      console.log("MemberPass Backend Started");
+
+      console.log("Backend URL:");
+      console.log("https://memberpass-gdur.onrender.com");
+
+      console.log("--------------------------------");
+
+      console.log("Allowed Frontend Origins:");
 
       allowedOrigins.forEach((origin) => {
         console.log(`- ${origin}`);
       });
+
+      console.log("--------------------------------");
     });
+
   } catch (error) {
-    console.error("Server startup failed:", error.message);
+
+    console.error(
+      "Server startup failed:",
+      error.message
+    );
+
     process.exit(1);
   }
 };
