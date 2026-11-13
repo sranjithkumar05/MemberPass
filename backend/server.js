@@ -33,6 +33,8 @@ const corsOptions = {
       return callback(null, true);
     }
 
+    console.error(`CORS blocked for origin: ${origin}`);
+
     return callback(
       new Error(`CORS blocked for origin: ${origin}`)
     );
@@ -52,7 +54,8 @@ const corsOptions = {
     "Authorization"
   ],
 
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 204
 };
 
 // Middleware
@@ -119,6 +122,7 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       console.log("CORS enabled for:");
+
       allowedOrigins.forEach((origin) => {
         console.log(`- ${origin}`);
       });
