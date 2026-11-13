@@ -22,7 +22,6 @@ export default function Navbar() {
         setScrolled(false)
       }
 
-      // Track active section
       const sections = ['home', 'about', 'features', 'how-it-works', 'contact']
       const scrollPosition = window.scrollY + 180
 
@@ -62,7 +61,7 @@ export default function Navbar() {
           href="#home"
           className="navbar-brand-link"
           onClick={(e) => handleLinkClick(e, '#home')}
-          aria-label="MemberPass Home"
+          aria-label="MemberPass Wellness Retreat Home"
         >
           <Logo size="default" />
         </a>
@@ -85,6 +84,17 @@ export default function Navbar() {
           </ul>
         </nav>
 
+        {/* Right CTA */}
+        <div className="nav-cta-wrapper">
+          <a
+            href="#contact"
+            className="btn btn-sm btn-outline-ocean"
+            onClick={(e) => handleLinkClick(e, '#contact')}
+          >
+            Join Membership
+          </a>
+        </div>
+
         {/* Mobile Hamburger Toggle Button */}
         <button
           type="button"
@@ -99,25 +109,31 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'open' : ''}`}>
-        <nav aria-label="Mobile Navigation">
-          <ul className="mobile-nav-list">
-            {navLinks.map((link) => (
-              <li key={link.id}>
-                <a
-                  href={link.href}
-                  className={`mobile-nav-link ${activeSection === link.id ? 'active' : ''}`}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <ul className="mobile-nav-list">
+          {navLinks.map((link) => (
+            <li key={link.id}>
+              <a
+                href={link.href}
+                className={`mobile-nav-link ${activeSection === link.id ? 'active' : ''}`}
+                onClick={(e) => handleLinkClick(e, link.href)}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+          <li className="mobile-cta-li">
+            <a
+              href="#contact"
+              className="btn btn-primary btn-block"
+              onClick={(e) => handleLinkClick(e, '#contact')}
+            >
+              Explore Membership
+            </a>
+          </li>
+        </ul>
       </div>
     </header>
   )
 }
-

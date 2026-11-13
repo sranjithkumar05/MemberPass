@@ -1,30 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#111633" />
-      <stop offset="100%" stop-color="#070a18" />
-    </linearGradient>
-    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#a855f7" />
-      <stop offset="50%" stop-color="#6366f1" />
-      <stop offset="100%" stop-color="#38bdf8" />
-    </linearGradient>
-    <linearGradient id="mGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f8fafc" />
-      <stop offset="50%" stop-color="#e2e8f0" />
-      <stop offset="100%" stop-color="#c084fc" />
-    </linearGradient>
-    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#c084fc" />
-      <stop offset="100%" stop-color="#9333ea" />
-    </linearGradient>
-  </defs>
-  <!-- Background squircle -->
-  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="2" />
-  <!-- Stylized Pass / M Shape -->
-  <path d="M18 44V23.5C18 21.5 20.2 20.2 21.9 21.3L32 27.8L42.1 21.3C43.8 20.2 46 21.5 46 23.5V44" stroke="url(#mGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Middle V / Pass Node -->
-  <path d="M32 28.5V44" stroke="url(#accentGrad)" stroke-width="4.5" stroke-linecap="round"/>
-  <!-- AI Sparkle Dot -->
-  <circle cx="32" cy="18" r="3.5" fill="#a855f7" />
+    <defs>
+        <linearGradient id="royaleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#451126" />
+            <stop offset="60%" stop-color="#6D1835" />
+            <stop offset="100%" stop-color="#A83D5B" />
+        </linearGradient>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e6cb9d" />
+            <stop offset="100%" stop-color="#cfa86e" />
+        </linearGradient>
+    </defs>
+    <!-- Background squircle -->
+    <rect width="64" height="64" rx="16" fill="#451126" stroke="url(#goldGrad)" stroke-width="2" />
+    <!-- Pass Badge Card -->
+    <rect x="13" y="15" width="38" height="28" rx="6" fill="#6D1835" stroke="url(#goldGrad)" stroke-width="1.5" />
+    <!-- Lanyard slot -->
+    <rect x="27" y="11" width="10" height="3" rx="1.5" fill="url(#goldGrad)" />
+    <!-- Monogram M -->
+    <text x="32" y="34" font-family="'Playfair Display', Georgia, serif" font-size="18" font-weight="700" fill="#FFF9F5" text-anchor="middle">M</text>
+    <!-- Mini Diamond Sparkle -->
+    <path d="M48 38L49.5 42.5L54 44L49.5 45.5L48 50L46.5 45.5L42 44L46.5 42.5L48 38Z" fill="url(#goldGrad)" />
 </svg>

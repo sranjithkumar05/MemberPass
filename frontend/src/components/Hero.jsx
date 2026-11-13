@@ -10,131 +10,115 @@ export default function Hero() {
   return (
     <section id="home" className="hero-section">
       <div className="section-container hero-container">
-        {/* Top AI Badge */}
-        <div className="hero-badge">
-          <span className="hero-badge-dot" />
-          <span className="hero-badge-text">Next-Gen AI Platform</span>
-          <span className="hero-badge-tag">v2.0</span>
-        </div>
+        {/* Left Column: Content */}
+        <div className="hero-content">
+          <div className="hero-brand-badge">
+            <span className="hero-badge-sun">☀️</span>
+            <span className="hero-badge-text">Mediterranean Coastal Wellness</span>
+            <span className="hero-badge-tag">Sanctuary</span>
+          </div>
 
-        {/* Hero Heading & Subtitle */}
-        <h1 className="hero-title">
-          Welcome to <span className="title-gradient">MemberPass</span>
-        </h1>
+          <h1 className="hero-title">
+            Find Your Balance. <br />
+            <span className="hero-title-highlight">Embrace Your Wellness.</span>
+          </h1>
 
-        <p className="hero-subtitle">
-          Smart Membership Management Powered by AI
-        </p>
+          <p className="hero-subtitle">
+            Smart Membership Management Powered by AI &bull; Mediterranean Yoga Centre
+          </p>
 
-        {/* Project Introduction */}
-        <p className="hero-description">
-          MemberPass is an intelligent membership platform designed to simplify membership
-          management through smart AI-powered technology. Automate onboarding, track memberships
-          in real-time, and empower your organization with predictive insights.
-        </p>
+          <p className="hero-description">
+            Experience serene coastal yoga sessions, mindful meditation retreats, and effortless
+            digital membership access. MemberPass seamlessly unifies smart digital passes, class
+            schedules, and personalized wellness journeys across the sun-drenched Mediterranean coast.
+          </p>
 
-        {/* Action Buttons */}
-        <div className="hero-actions">
-          <a
-            href="#how-it-works"
-            className="btn btn-primary"
-            onClick={(e) => handleScrollTo(e, '#how-it-works')}
-          >
-            <span>Get Started</span>
-            <svg
-              className="btn-arrow-icon"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
+          <div className="hero-actions">
+            <a
+              href="#features"
+              className="btn btn-primary"
+              onClick={(e) => handleScrollTo(e, '#features')}
             >
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </a>
+              <span>Explore Membership</span>
+              <svg
+                className="btn-arrow-icon"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </a>
 
-          <a
-            href="#features"
-            className="btn btn-secondary"
-            onClick={(e) => handleScrollTo(e, '#features')}
-          >
-            <span>Explore Features</span>
-          </a>
+            <a
+              href="#how-it-works"
+              className="btn btn-secondary"
+              onClick={(e) => handleScrollTo(e, '#how-it-works')}
+            >
+              <span>Discover Our Classes</span>
+            </a>
+          </div>
+
+          {/* Quick wellness highlights */}
+          <div className="hero-trust-bar">
+            <div className="trust-item">
+              <span className="trust-num">98%</span>
+              <span className="trust-text">Member Harmony</span>
+            </div>
+            <div className="trust-divider" />
+            <div className="trust-item">
+              <span className="trust-num">35+</span>
+              <span className="trust-text">Weekly Coastal Sessions</span>
+            </div>
+            <div className="trust-divider" />
+            <div className="trust-item">
+              <span className="trust-num">Instant</span>
+              <span className="trust-text">Digital QR Check-in</span>
+            </div>
+          </div>
         </div>
 
-        {/* Hero Interactive Showcase Mockup */}
-        <div className="hero-showcase">
-          <div className="showcase-card">
-            {/* Showcase Header Bar */}
-            <div className="showcase-header">
-              <div className="window-dots">
-                <span className="dot dot-red" />
-                <span className="dot dot-yellow" />
-                <span className="dot dot-green" />
-              </div>
-              <div className="showcase-title-chip">
-                <span className="chip-indicator" />
-                <span>memberpass.ai // Platform Engine</span>
-              </div>
-              <div className="showcase-badge-pill">AI Active</div>
+        {/* Right Column: Visual Composition with Coastal Yoga Image */}
+        <div className="hero-visual-wrapper">
+          <div className="hero-card-frame">
+            <div className="hero-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80"
+                alt="Serene Mediterranean coastal wellness and yoga retreat"
+                className="hero-main-img"
+                loading="eager"
+              />
+              <div className="hero-img-overlay" />
             </div>
 
-            {/* Showcase Inner Grid */}
-            <div className="showcase-content">
-              {/* Metric Item 1 */}
-              <div className="showcase-stat-box">
-                <div className="stat-icon-wrapper purple">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="stat-label">Active Members</div>
-                  <div className="stat-val">3,842 <span className="stat-growth">+14%</span></div>
-                </div>
-              </div>
-
-              {/* Metric Item 2 */}
-              <div className="showcase-stat-box">
-                <div className="stat-icon-wrapper blue">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="stat-label">AI Automation Rate</div>
-                  <div className="stat-val">99.4% <span className="stat-growth">Instant</span></div>
-                </div>
-              </div>
-
-              {/* Metric Item 3 */}
-              <div className="showcase-stat-box">
-                <div className="stat-icon-wrapper cyan">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="stat-label">Verification Time</div>
-                  <div className="stat-val">0.3s <span className="stat-growth">Real-time</span></div>
-                </div>
+            {/* Floating Mediterranean Yoga Pass Card */}
+            <div className="floating-wellness-card retreat-card">
+              <div className="card-top-icon">🧘‍♀️</div>
+              <div>
+                <div className="retreat-title">Sunrise Vinyasa by the Sea</div>
+                <div className="retreat-meta">Daily at 07:00 AM &bull; Coastal Deck</div>
               </div>
             </div>
 
-            {/* Live AI Status Stream Bar */}
-            <div className="showcase-status-bar">
-              <div className="status-stream-left">
-                <span className="live-pulse" />
-                <span className="status-stream-text">
-                  <strong>AI Assistant:</strong> Verified 42 new memberships &bull; Scheduled 18 automated renewal alerts &bull; 0 manual errors
-                </span>
+            {/* Floating Pass Badge */}
+            <div className="floating-wellness-card member-pass-chip">
+              <div className="chip-qr-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                  <line x1="10" y1="10" x2="14" y2="10" />
+                </svg>
               </div>
-              <span className="status-stream-tag">Neural Sync OK</span>
+              <div>
+                <div className="pass-status">Verified MemberPass</div>
+                <div className="pass-tier">Coastal Gold Sanctuary</div>
+              </div>
             </div>
           </div>
         </div>
@@ -142,4 +126,3 @@ export default function Hero() {
     </section>
   )
 }
-

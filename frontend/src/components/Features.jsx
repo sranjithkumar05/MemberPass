@@ -3,11 +3,11 @@ export default function Features() {
     {
       id: 'smart-management',
       name: 'Smart Membership Management',
-      tag: 'Core Platform',
-      desc: 'Centralize membership tier definitions, automate renewal notices, and manage lifecycles dynamically with customizable rules.',
+      tag: 'Sanctuary Platform',
+      desc: 'Centralize membership tier definitions, automate renewal notices, and manage retreat lifecycles dynamically with customizable rules.',
       bullets: [
-        'Multi-tier membership categories (Standard, VIP, Corporate)',
-        'Automated status transitions (Active, Grace, Expired)',
+        'Multi-tier membership categories (Coastal Drop-in, Unlimited Sanctuary, VIP Retreat)',
+        'Automated status transitions (Active, Grace, Renewed)',
         'Flexible pricing and customized renewal schedules',
       ],
       icon: (
@@ -17,17 +17,17 @@ export default function Features() {
           <path d="M2 12l10 5 10-5" />
         </svg>
       ),
-      accentColor: 'purple',
+      accentColor: 'ocean',
     },
     {
       id: 'ai-assistant',
-      name: 'AI Assistant',
-      tag: 'Intelligence Engine',
-      desc: 'Interact with an intelligent assistant to quickly query records, summarize activity, and draft communication automatically.',
+      name: 'AI Wellness Assistant',
+      tag: 'Mindful Engine',
+      desc: 'Interact with an intelligent assistant to quickly query records, summarize attendance activity, and draft communication effortlessly.',
       bullets: [
-        'Natural language queries for member lookup and stats',
-        'Smart anomaly detection for attendance and sign-ups',
-        'Automated drafting for personalized member alerts',
+        'Natural language queries for member lookup, class capacity and stats',
+        'Smart trend detection for class attendance and seasonal peaks',
+        'Automated drafting for personalized member notifications and welcome packs',
       ],
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -35,17 +35,17 @@ export default function Features() {
           <circle cx="12" cy="12" r="3" fill="currentColor" fillOpacity="0.2" />
         </svg>
       ),
-      accentColor: 'indigo',
+      accentColor: 'coral',
     },
     {
       id: 'member-info',
       name: 'Member Information Management',
       tag: 'Secure Directory',
-      desc: 'Maintain centralized, secure digital profiles with verified contact details, custom attributes, and digital identification.',
+      desc: 'Maintain centralized, secure digital profiles with verified contact details, wellness preferences, and digital identification.',
       bullets: [
-        'Comprehensive digital member profiles with photo IDs',
-        'Custom metadata fields tailored to organizational needs',
-        'Privacy-conscious data storage and audit-ready logs',
+        'Comprehensive digital member profiles with photo verification',
+        'Custom wellness attributes (yoga experience, retreat preferences, medical notes)',
+        'Privacy-conscious secure data storage and audit-ready logs',
       ],
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -53,24 +53,24 @@ export default function Features() {
           <circle cx="12" cy="7" r="4" />
         </svg>
       ),
-      accentColor: 'blue',
+      accentColor: 'sand',
     },
     {
       id: 'membership-tracking',
-      name: 'Membership Tracking',
+      name: 'Membership Tracking & Passes',
       tag: 'Real-Time Insights',
-      desc: 'Track check-ins, attendance history, validity windows, and renewal statuses in real time through visual metrics.',
+      desc: 'Track class check-ins, attendance history, validity windows, and renewal statuses in real time through clear visual metrics.',
       bullets: [
-        'Instant digital pass verification & check-in logging',
-        'Live expiration monitors with proactive alerts',
-        'Engagement frequency analytics and retention metrics',
+        'Instant digital QR pass verification & check-in logging at coastal studios',
+        'Live expiration monitors with serene proactive alerts',
+        'Attendance frequency analytics and member retention metrics',
       ],
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
         </svg>
       ),
-      accentColor: 'cyan',
+      accentColor: 'sky',
     },
   ]
 
@@ -80,14 +80,14 @@ export default function Features() {
         {/* Section Header */}
         <div className="section-header">
           <div className="section-tag">
-            <span className="tag-sparkle">✦</span>
+            <span className="tag-sparkle">☀️</span>
             <span>Platform Capabilities</span>
           </div>
           <h2 className="section-title">
-            Powerful Features for <span className="title-gradient">Effortless Management</span>
+            Powerful Features for <span className="title-gradient">Effortless Sanctuary Management</span>
           </h2>
           <p className="section-subtitle">
-            Explore the core pillars engineered to elevate how your organization manages, tracks, and retains members.
+            Explore the core pillars engineered to elevate how your yoga centre and wellness community manages, tracks, and retains members.
           </p>
         </div>
 
@@ -95,26 +95,22 @@ export default function Features() {
         <div className="features-grid">
           {featuresList.map((feat) => (
             <div key={feat.id} className={`feature-card accent-${feat.accentColor}`}>
-              <div className="feature-card-glow" aria-hidden="true" />
-              
               <div className="feature-top-bar">
-                <div className={`feature-icon-wrapper ${feat.accentColor}`}>
-                  {feat.icon}
-                </div>
-                <span className="feature-tag-badge">{feat.tag}</span>
+                <div className="feature-icon-box">{feat.icon}</div>
+                <span className="feature-tag">{feat.tag}</span>
               </div>
 
-              <h3 className="feature-title">{feat.name}</h3>
-              <p className="feature-description">{feat.desc}</p>
+              <h3 className="feature-name">{feat.name}</h3>
+              <p className="feature-desc">{feat.desc}</p>
 
-              <div className="feature-bullets-list">
+              <ul className="feature-bullets-list">
                 {feat.bullets.map((bullet, idx) => (
-                  <div key={idx} className="feature-bullet-item">
+                  <li key={idx} className="feature-bullet-item">
                     <span className="bullet-check">✓</span>
-                    <span className="bullet-text">{bullet}</span>
-                  </div>
+                    <span>{bullet}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
@@ -122,4 +118,3 @@ export default function Features() {
     </section>
   )
 }
-

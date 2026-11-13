@@ -19,24 +19,24 @@ export default function Footer() {
             className="footer-logo-link"
             onClick={(e) => handleScrollTo(e, '#home')}
           >
-            <Logo size="default" />
+            <Logo size="default" light={true} />
           </a>
           <p className="footer-brand-desc">
-            MemberPass is an intelligent membership platform designed to simplify membership management through smart AI-powered technology.
+            MemberPass is an intelligent Mediterranean coastal wellness & yoga membership platform designed to harmonize member journeys through smart technology.
           </p>
-          <div className="footer-ai-status">
+          <div className="footer-wellness-status">
             <span className="footer-status-dot" />
-            <span>AI Platform Engine Operational</span>
+            <span>Coastal Sanctuary Network Active</span>
           </div>
         </div>
 
-        {/* Quick Links Column */}
+        {/* Navigation Column */}
         <div className="footer-links-column">
           <h4 className="footer-column-heading">Navigation</h4>
           <ul className="footer-nav-list">
             <li>
               <a href="#home" onClick={(e) => handleScrollTo(e, '#home')}>
-                Home
+                Home Sanctuary
               </a>
             </li>
             <li>
@@ -46,7 +46,7 @@ export default function Footer() {
             </li>
             <li>
               <a href="#features" onClick={(e) => handleScrollTo(e, '#features')}>
-                Key Features
+                Sanctuary Features
               </a>
             </li>
             <li>
@@ -56,7 +56,7 @@ export default function Footer() {
             </li>
             <li>
               <a href="#contact" onClick={(e) => handleScrollTo(e, '#contact')}>
-                Contact Us
+                Contact & Inquiries
               </a>
             </li>
           </ul>
@@ -73,17 +73,17 @@ export default function Footer() {
             </li>
             <li>
               <a href="#features" onClick={(e) => handleScrollTo(e, '#features')}>
-                AI Assistant
+                AI Wellness Assistant
               </a>
             </li>
             <li>
               <a href="#features" onClick={(e) => handleScrollTo(e, '#features')}>
-                Member Information Management
+                Member Profile Management
               </a>
             </li>
             <li>
               <a href="#features" onClick={(e) => handleScrollTo(e, '#features')}>
-                Membership Tracking
+                Digital QR Pass Tracking
               </a>
             </li>
           </ul>
@@ -94,16 +94,14 @@ export default function Footer() {
       <div className="footer-bottom-bar">
         <div className="section-container footer-bottom-inner">
           <p className="copyright-text">
-            &copy; 2026 MemberPass. All rights reserved. Intelligent Membership Management Platform.
+            &copy; 2026 MemberPass. All rights reserved. Mediterranean Coastal Wellness Yoga Platform.
           </p>
           <div className="footer-meta-tags">
-            <span className="meta-badge">Built with AI Intelligence</span>
-            <span className="meta-divider">&bull;</span>
-            <span className="meta-badge">Privacy First</span>
+            <span className="meta-badge">Mediterranean Sanctuary</span>
+            <span className="meta-badge">AI Powered</span>
           </div>
         </div>
       </div>
     </footer>
   )
 }
-

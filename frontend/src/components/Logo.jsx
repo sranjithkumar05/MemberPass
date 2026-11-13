@@ -1,8 +1,8 @@
-export default function Logo({ size = 'default', showText = true }) {
+export default function Logo({ size = 'default', showText = true, light = false }) {
   const isSmall = size === 'small'
 
   return (
-    <div className={`brand-logo-group ${isSmall ? 'logo-sm' : ''}`}>
+    <div className={`brand-logo-group ${isSmall ? 'logo-sm' : ''} ${light ? 'logo-light' : ''}`}>
       <div className="logo-badge-wrapper">
         <svg
           className="logo-icon-svg"
@@ -12,60 +12,59 @@ export default function Logo({ size = 'default', showText = true }) {
           aria-hidden="true"
         >
           <defs>
-            <linearGradient id="mpLogoBorder" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#c084fc" />
-              <stop offset="50%" stopColor="#a855f7" />
-              <stop offset="100%" stopColor="#6366f1" />
+            <linearGradient id="medSeaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#386D83" />
+              <stop offset="100%" stopColor="#203746" />
             </linearGradient>
-            <linearGradient id="mpLogoPass" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="60%" stopColor="#e9d5ff" />
-              <stop offset="100%" stopColor="#a855f7" />
-            </linearGradient>
-            <linearGradient id="mpLogoStem" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#c084fc" />
-              <stop offset="100%" stopColor="#9333ea" />
+            <linearGradient id="medSunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#D98D70" />
+              <stop offset="100%" stopColor="#E9D8C2" />
             </linearGradient>
           </defs>
 
-          {/* Digital Pass Shield Silhouette */}
+          {/* Calming Lotus / Coastal Waves Lotus Icon */}
+          <circle cx="32" cy="32" r="28" fill="#F6F9F8" stroke="#B8D6DF" strokeWidth="2" />
+          
+          {/* Mediterranean Sun */}
+          <circle cx="32" cy="22" r="6" fill="url(#medSunGrad)" />
+
+          {/* Lotus petal center */}
           <path
-            d="M14 18C14 13.5817 17.5817 10 22 10H42C46.4183 10 50 13.5817 50 18V46C50 50.4183 46.4183 54 42 54H22C17.5817 54 14 50.4183 14 46V18Z"
-            fill="#0b1028"
-            stroke="url(#mpLogoBorder)"
-            strokeWidth="2.5"
+            d="M32 26C30 31 27 36 27 41C27 44 29.2 46 32 46C34.8 46 37 44 37 41C37 36 34 31 32 26Z"
+            fill="url(#medSeaGrad)"
           />
 
-          {/* Stylized 'M' Pass Lines */}
+          {/* Left Petal / Wave */}
           <path
-            d="M23 44V27.5L32 34.5L41 27.5V44"
-            stroke="url(#mpLogoPass)"
-            strokeWidth="3.5"
+            d="M26 33C21 34 17 38 18 42C19 45 22 46 25 44C27 42 27.5 37 26 33Z"
+            fill="#386D83"
+            opacity="0.85"
+          />
+
+          {/* Right Petal / Wave */}
+          <path
+            d="M38 33C43 34 47 38 46 42C45 45 42 46 39 44C37 42 36.5 37 38 33Z"
+            fill="#386D83"
+            opacity="0.85"
+          />
+
+          {/* Calming Ripple Arc */}
+          <path
+            d="M20 48C24 50 40 50 44 48"
+            stroke="#D98D70"
+            strokeWidth="2"
             strokeLinecap="round"
-            strokeLinejoin="round"
           />
-
-          {/* Central AI Node Stem */}
-          <path
-            d="M32 35.5V44"
-            stroke="url(#mpLogoStem)"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-          />
-
-          {/* Intelligent AI Glow Spark */}
-          <circle cx="32" cy="20" r="3" fill="#c084fc" />
-          <circle cx="32" cy="20" r="6" stroke="#a855f7" strokeWidth="1" opacity="0.6" />
         </svg>
       </div>
 
       {showText && (
         <span className="brand-title-text">
-          <span className="text-white">Member</span>
-          <span className="text-gradient-purple">Pass</span>
+          <span className="brand-title-main">Member</span>
+          <span className="brand-title-accent">Pass</span>
+          <span className="brand-wellness-tag">YOGA &bull; RETREATS</span>
         </span>
       )}
     </div>
   )
 }
-

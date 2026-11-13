@@ -2,8 +2,8 @@ export default function HowItWorks() {
   const steps = [
     {
       number: '01',
-      title: 'Configure Tiers & Rules',
-      desc: 'Define custom membership levels, access privileges, pricing, and automated renewal timelines tailored to your organization.',
+      title: 'Configure Tiers & Passes',
+      desc: 'Define custom membership levels, retreat access privileges, yoga class pricing, and automated renewal timelines tailored to your studio.',
       badge: 'Step 1: Setup',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -14,8 +14,8 @@ export default function HowItWorks() {
     },
     {
       number: '02',
-      title: 'AI-Powered Member Onboarding',
-      desc: 'Seamlessly capture member information. The AI verification engine checks records, cleans duplicate data, and issues unique digital passes.',
+      title: 'Mindful Member Onboarding',
+      desc: 'Seamlessly capture yogi profiles and preferences. The AI engine checks records, cleans duplicate data, and issues unique digital passes.',
       badge: 'Step 2: Onboard',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -28,9 +28,9 @@ export default function HowItWorks() {
     },
     {
       number: '03',
-      title: 'Real-Time Tracking & Verification',
-      desc: 'Validate memberships instantly upon entry or check-in. The platform updates activity metrics in real time and maintains clean logs.',
-      badge: 'Step 3: Track',
+      title: 'Real-Time Class Check-in',
+      desc: 'Validate memberships instantly upon entry at coastal decks or studios. The platform updates attendance in real time and logs class capacity.',
+      badge: 'Step 3: Check-in',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M9 11l3 3L22 4" />
@@ -40,9 +40,9 @@ export default function HowItWorks() {
     },
     {
       number: '04',
-      title: 'Intelligent Insights & Retention',
-      desc: 'AI detects expiring memberships ahead of time, sends automated notifications, and provides actionable retention suggestions.',
-      badge: 'Step 4: Retain',
+      title: 'Serene Insights & Retention',
+      desc: 'AI detects expiring memberships ahead of time, sends peaceful personalized renewal invites, and provides actionable community retention insights.',
+      badge: 'Step 4: Nurture',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="12" cy="12" r="10" />
@@ -58,14 +58,14 @@ export default function HowItWorks() {
         {/* Section Header */}
         <div className="section-header">
           <div className="section-tag">
-            <span className="tag-sparkle">✦</span>
+            <span className="tag-sparkle">🧘</span>
             <span>Platform Workflow</span>
           </div>
           <h2 className="section-title">
             How <span className="title-gradient">MemberPass Works</span>
           </h2>
           <p className="section-subtitle">
-            A frictionless, intelligent four-step journey designed to handle complex memberships with zero headache.
+            A frictionless, elegant four-step journey designed to handle retreat & yoga memberships with peaceful simplicity.
           </p>
         </div>
 
@@ -92,4 +92,3 @@ export default function HowItWorks() {
     </section>
   )
 }
-

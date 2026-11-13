@@ -1,7 +1,7 @@
 export default function About() {
   const pillars = [
     {
-      title: 'Automated Lifecycle Workflows',
+      title: 'Mindful Automated Workflows',
       desc: 'AI handles registration validation, status updates, grace periods, and renewal notifications autonomously without human bottlenecks.',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -34,7 +34,7 @@ export default function About() {
     },
     {
       title: 'Adaptive Rule Engine',
-      desc: 'Tailor custom tier configurations, member privileges, guest allowances, and validation criteria that evolve with your organization.',
+      desc: 'Tailor custom tier configurations, member privileges, guest allowances, and validation criteria that evolve with your sanctuary.',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
@@ -59,27 +59,27 @@ export default function About() {
         {/* Section Header */}
         <div className="section-header">
           <div className="section-tag">
-            <span className="tag-sparkle">✦</span>
+            <span className="tag-sparkle">🌊</span>
             <span>About MemberPass</span>
           </div>
           <h2 className="section-title">
-            Transforming Membership with <span className="title-gradient">Intelligent AI</span>
+            Transforming Wellness with <span className="title-gradient">Intelligent AI</span>
           </h2>
           <p className="section-subtitle">
-            MemberPass was created to eliminate the friction, complexity, and manual overhead of traditional membership systems.
+            MemberPass was created to eliminate the friction, complexity, and manual overhead of traditional wellness & yoga membership systems.
           </p>
         </div>
 
-        {/* Vision & Purpose Narrative */}
+        {/* Vision & Purpose Narrative Split */}
         <div className="about-overview-grid">
           <div className="about-card about-vision-card">
             <div className="card-badge">Our Purpose & Vision</div>
-            <h3 className="about-card-title">A Modern Platform Built for Growing Communities</h3>
+            <h3 className="about-card-title">A Modern Sanctuary Platform Built for Growing Communities</h3>
             <p className="about-card-text">
-              Managing members should never be slowed down by disjointed spreadsheets, forgotten renewals, or manual check-in logs. MemberPass unifies every stage of membership lifecycle management into an intelligent, centralized platform.
+              Managing members should never be slowed down by disjointed spreadsheets, forgotten renewals, or manual check-in logs. MemberPass unifies every stage of membership lifecycle management into an intelligent, centralized sanctuary platform.
             </p>
             <p className="about-card-text">
-              Our vision is to empower fitness clubs, co-working spaces, enterprise organizations, and professional associations with seamless digital passes, real-time activity intelligence, and friction-free interactions.
+              Our vision is to empower yoga retreats, wellness centres, coastal athletic clubs, and mindfulness studios with seamless digital passes, real-time activity intelligence, and friction-free interactions.
             </p>
           </div>
 
@@ -87,11 +87,27 @@ export default function About() {
             <div className="card-badge">How AI Simplifies Everything</div>
             <h3 className="about-card-title">Intelligent Automation at Every Touchpoint</h3>
             <p className="about-card-text">
-              Instead of administrators manually checking expiration dates and sending repetitive reminders, MemberPass’s built-in AI models monitor memberships in real time.
+              Instead of retreat administrators manually checking expiration dates and sending repetitive reminders, MemberPass’s built-in AI models monitor memberships in real time.
             </p>
             <p className="about-card-text">
-              From auto-classifying member status to detecting renewal trends and answering questions via the intelligent assistant, AI turns tedious administrative burden into automated clarity.
+              From auto-classifying member status to detecting renewal trends and answering questions via the intelligent assistant, AI turns tedious administrative burden into peaceful, automated clarity.
             </p>
+          </div>
+        </div>
+
+        {/* Coastal Imagery Banner */}
+        <div className="about-coastal-banner">
+          <div className="banner-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80"
+              alt="Mindful yoga meditation by the Mediterranean sea"
+              className="banner-image"
+              loading="lazy"
+            />
+            <div className="banner-overlay-caption">
+              <h4>Where Ancient Mindfulness Meets Cutting-Edge Technology</h4>
+              <p>Designed for yoga studios, wellness resorts, and holistic healing communities.</p>
+            </div>
           </div>
         </div>
 
@@ -122,4 +138,3 @@ export default function About() {
     </section>
   )
 }
-
