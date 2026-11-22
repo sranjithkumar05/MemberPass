@@ -2251,41 +2251,9 @@ main {
 }
 
 /* --------------------------------------------------------------------------
-   DEDICATED AI ASSISTANT PAGE STYLES
+   DEDICATED AI ASSISTANT PAGE (Scoped in AIAssistantPage.css)
    -------------------------------------------------------------------------- */
-.ai-page-wrapper {
-  width: 90%;
-  max-width: 1400px;
-  margin: 30px auto 60px;
-  min-height: calc(100vh - 180px);
-}
 
-.ai-page-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.ai-page-title {
-  font-family: var(--font-heading);
-  font-size: 2.5rem;
-  color: var(--deep-navy);
-  margin-bottom: 8px;
-}
-
-.ai-page-subtitle {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-}
-
-.ai-chat-interface {
-  background: #ffffff;
-  border: 1px solid rgba(56, 109, 131, 0.16);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 32px;
-  max-width: 960px;
-  margin: 0 auto;
-}
 
 /* --------------------------------------------------------------------------
    RESPONSIVE DESIGN BREAKPOINTS
