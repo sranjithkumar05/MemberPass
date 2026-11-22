@@ -4,44 +4,46 @@
 
 ## 🌐 Live Demo
 
-- **Live Website:** https://member-pass.vercel.app/
-- **Project Drive:** https://drive.google.com/file/d/11nW79ZUdcOa7IDWZXaMWA7gHmg-vu8A4/view?usp=sharing
-- **AI Assistant Demo:** https://drive.google.com/file/d/1fE0dK_WYZGUPuKz4V554H17JqjZujUlv/view?usp=sharing
+- **Live Website:** https://member-pass-psi.vercel.app/
+- **Project Drive:** https://drive.google.com/file/d/1kD_DCgDPRJ4E2bNUgRUM0zv5mxd_lEv0/view?usp=sharing
+- **AI Assistant Demo:** https://drive.google.com/file/d/1jRWnra7mDqcQVUyQKUA1XvM04d2AKuk5/view?usp=sharing
 
 ---
 
 ## 📌 About the Project
 
-MemberPass is a web-based membership management platform designed to simplify and modernize membership-related processes.
+MemberPass is a modern, web-based membership management platform designed to simplify and streamline membership-related operations.
 
-It combines membership management, payment integration, attendance tracking, QR-based check-ins, membership pause functionality, automated expiry reminders and AI-powered assistance into a modern web application.
+It combines membership management, online payment processing, attendance tracking, QR-based check-ins, membership pause functionality, automated expiry reminders and AI-powered assistance into a unified digital platform.
 
-MemberPass aims to provide a smoother experience for both members and administrators by making membership-related operations easier, more accessible and efficient.
+MemberPass aims to deliver a seamless experience for both members and administrators by making membership operations more efficient, accessible and user-friendly.
 
 ## 🎯 Project Objectives
 
-- Simplify membership management.
-- Provide a user-friendly digital experience.
+- Simplify membership management and administration.
+- Provide a modern and user-friendly digital experience.
 - Integrate AI-powered membership assistance.
 - Enable secure online membership payments.
 - Track member attendance and class usage.
-- Automate membership expiry notifications.
-- Build a modern and responsive web application.
+- Automate membership expiry processing and notifications.
+- Improve member engagement through intelligent assistance.
+- Develop a responsive and scalable web application.
 
 ## ✨ Key Features
 
-- **Membership Management** – Manage memberships, plans and member information.
+- **Membership Management** – Manage members, memberships, plans and membership-related information.
 - **Multiple Membership Tiers** – Basic, Standard and Premium membership plans.
-- **Razorpay Payment Integration** – Payment processing with payment verification and webhook handling.
-- **QR-Based Check-In** – QR validation and attendance check-in functionality.
-- **Class Usage Tracking** – Track class usage and enforce membership class limits.
-- **Membership Pause** – Pause memberships with expiry-date adjustments.
-- **Automated Expiry Management** – Automated membership expiry processing and reminder notifications.
-- **AI Assistant** – AI-powered assistance for membership-related queries.
+- **Razorpay Payment Integration** – Online payment processing with payment verification and webhook handling.
+- **QR-Based Check-In** – QR pass validation and attendance check-in functionality.
+- **Class Usage Tracking** – Track class attendance and enforce membership class limits.
+- **Membership Pause** – Allow eligible members to pause memberships with expiry-date adjustments.
+- **Automated Expiry Management** – Automatically process expired memberships and manage expiry reminders.
+- **AI Assistant** – AI-powered assistance for membership-related questions and queries.
 - **AI Absentee Drafts** – Generate draft messages for members with attendance concerns.
-- **Member Dashboard** – Access membership status, attendance and membership details.
-- **Staff/Admin Features** – Membership-related administrative functionality.
-- **Responsive UI** – Modern interface designed for a convenient digital experience.
+- **Member Dashboard** – Access membership status, digital passes, attendance history and membership information.
+- **Staff/Admin Dashboard** – Manage membership-related administrative operations.
+- **Digital Membership Pass** – Access membership pass information and QR-based validation.
+- **Responsive UI** – Modern interface designed for convenient access across devices.
 
 ## 🛠️ Technologies Used
 
@@ -51,21 +53,21 @@ MemberPass aims to provide a smoother experience for both members and administra
 - **Authentication:** JWT-based authentication
 - **Payment Integration:** Razorpay
 - **AI Integration:** AI service integration
-- **Deployment:** Vercel
-- **Version Control:** Git & GitHub
+- **Deployment:** Vercel and Render
+- **Version Control:** Git and GitHub
 
 ## 🚀 Getting Started
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/sweetha1416/MemberPass.git
+git clone https://github.com/sweswar1614/Memberpass.git
 ```
 
 ### 2. Navigate to the Project
 
 ```bash
-cd MemberPass
+cd Memberpass
 ```
 
 ### 3. Install Frontend Dependencies
@@ -86,9 +88,16 @@ npm install
 
 ### 5. Configure Environment Variables
 
-Configure the necessary environment variables in the backend `.env` file, including database connection, authentication and payment configuration.
+Configure the required environment variables in the backend `.env` file.
 
-Do not commit secrets or API keys to GitHub.
+These may include:
+
+- MongoDB connection configuration
+- JWT authentication configuration
+- Razorpay API credentials
+- AI service configuration
+
+**Never commit sensitive credentials, API keys or environment variables to GitHub.**
 
 ### 6. Run the Backend
 
@@ -104,24 +113,27 @@ cd frontend
 npm run dev
 ```
 
-Open the local URL displayed in your frontend terminal.
+Open the local URL displayed in the frontend terminal to access the application.
 
 ## 🔗 Project Links
 
-- **Live Website:** https://member-pass.vercel.app/
-- **GitHub Repository:** https://github.com/sweetha1416/MemberPass
+- **Live Website:** https://member-pass-psi.vercel.app/
+- **Project Drive:** https://drive.google.com/file/d/1kD_DCgDPRJ4E2bNUgRUM0zv5mxd_lEv0/view?usp=sharing
+- **AI Assistant Demo:** https://drive.google.com/file/d/1jRWnra7mDqcQVUyQKUA1XvM04d2AKuk5/view?usp=sharing
+- **GitHub Repository:** https://github.com/sweswar1614/Memberpass
 
 ## 🔮 Future Enhancements
 
 - Advanced membership analytics and reporting.
 - Enhanced AI-powered recommendations.
-- Additional automation for member engagement.
-- Improved dashboard visualization.
-- Expanded membership and attendance insights.
+- Additional member engagement automation.
+- Improved dashboard visualization and analytics.
+- Expanded membership insights and attendance reporting.
+- Additional integrations and management capabilities.
 
-## 👨‍💻 Project Status
+## 📈 Project Status
 
-MemberPass is an actively developed project. Features and functionality are continuously improved through testing, implementation and UI/UX enhancements.
+MemberPass is an actively developed membership management platform. Features are continuously enhanced through development, testing, integration and UI/UX improvements.
 
 ---
 
