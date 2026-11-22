@@ -4,10 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-// ==========================================
-// ENVIRONMENT CONFIGURATION
-// ==========================================
-
+// Load environment variables
 dotenv.config({
   path: path.join(__dirname, ".env")
 });
@@ -16,42 +13,32 @@ if (!process.env.MONGO_URI) {
   dotenv.config();
 }
 
-// ==========================================
-// IMPORTS
-// ==========================================
-
 const connectDB = require("./config/db");
-
+const startMembershipPauseJob = require("./jobs/membershipPauseJob");
+const {
+  startMembershipExpiryJob
+} = require("./jobs/membershipExpiryJob");
 const app = express();
 
-// ==========================================
-// ALLOWED FRONTEND ORIGINS
-// ==========================================
-
+// Allowed frontend origins
 const allowedOrigins = [
-  "https://member-pass-psi.vercel.app",
+  "https://member-pass.vercel.app",
+  "https://member-pass-7n36y4wbu-swethakumar837-1628s-projects.vercel.app",
+  "https://member-pass-6k25f0z49-swethakumar837-1628s-projects.vercel.app",
   "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
   "http://127.0.0.1:5173"
 ];
 
-// ==========================================
-// CORS CONFIGURATION
-// ==========================================
-
+// CORS configuration
 const corsOptions = {
   origin: (origin, callback) => {
-
-    // Allow requests without Origin header
-    if (!origin) {
+    // Allow requests without an Origin header
+    // and requests from approved frontend URLs
+    if (!origin || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
-
-    // Allow approved frontend origins
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-
-    console.error(`CORS blocked for origin: ${origin}`);
 
     return callback(
       new Error(`CORS blocked for origin: ${origin}`)
@@ -72,43 +59,36 @@ const corsOptions = {
     "Authorization"
   ],
 
-  credentials: true,
-
-  optionsSuccessStatus: 204
+  credentials: true
 };
 
-// ==========================================
-// MIDDLEWARE
-// ==========================================
-
+// Middleware
 app.use(cors(corsOptions));
 
+// Razorpay Webhook - Raw body must be available for signature verification
+const { handleRazorpayWebhook } = require("./controllers/webhookController");
+
+app.post(
+  "/api/payments/webhook",
+  express.raw({ type: "*/*" }),
+  handleRazorpayWebhook
+);
+
+// Normal request body parsers
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.urlencoded({
-  extended: true
-}));
-
-// ==========================================
-// API ROUTES
-// ==========================================
-
+// API Routes
 app.use("/api/auth", require("./routes/authRoutes"));
-
 app.use("/api/plans", require("./routes/planRoutes"));
-
 app.use("/api/payments", require("./routes/paymentRoutes"));
-
 app.use("/api/member", require("./routes/memberRoutes"));
-
 app.use("/api/qr", require("./routes/qrRoutes"));
-
 app.use("/api/ai", require("./routes/aiRoutes"));
+app.use("/api/absentees", require("./routes/absenteeRoutes"));
+app.use("/api/reminders", require("./routes/reminderRoutes"));
 
-// ==========================================
-// HOME ROUTE
-// ==========================================
-
+// Home Route
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
@@ -116,22 +96,15 @@ app.get("/", (req, res) => {
   });
 });
 
-// ==========================================
-// HEALTH CHECK ROUTE
-// ==========================================
-
+// Health Check Route
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "MemberPass server is running",
-    frontend: "https://member-pass-psi.vercel.app"
+    message: "MemberPass server is running"
   });
 });
 
-// ==========================================
-// 404 HANDLER
-// ==========================================
-
+// 404 Handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -139,10 +112,7 @@ app.use((req, res) => {
   });
 });
 
-// ==========================================
-// ERROR HANDLER
-// ==========================================
-
+// Error Handler
 app.use((err, req, res, next) => {
   console.error("Server Error:", err.message);
 
@@ -159,48 +129,28 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ==========================================
-// START SERVER
-// ==========================================
-
+// Start Server
 const startServer = async () => {
   try {
-
     await connectDB();
 
+startMembershipPauseJob();
+startMembershipExpiryJob();
     const PORT = process.env.PORT || 5000;
 
     app.listen(PORT, () => {
-
       console.log(`Server running on port ${PORT}`);
-
-      console.log("--------------------------------");
-
-      console.log("MemberPass Backend Started");
-
-      console.log("Backend URL:");
-      console.log("https://memberpass-gdur.onrender.com");
-
-      console.log("--------------------------------");
-
-      console.log("Allowed Frontend Origins:");
-
+      console.log("CORS enabled for:");
       allowedOrigins.forEach((origin) => {
         console.log(`- ${origin}`);
       });
-
-      console.log("--------------------------------");
     });
-
   } catch (error) {
-
-    console.error(
-      "Server startup failed:",
-      error.message
-    );
-
+    console.error("Server startup failed:", error.message);
     process.exit(1);
   }
 };
 
 startServer();
+
+
