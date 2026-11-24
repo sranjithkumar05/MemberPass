@@ -345,7 +345,7 @@ main {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
 }
 
 .nav-links a,
@@ -986,8 +986,8 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 28px;
-  background: rgba(184, 214, 223, 0.2);
+  padding: 20px 32px;
+  background: rgba(184, 214, 223, 0.18);
   border-bottom: 1px solid rgba(56, 109, 131, 0.12);
 }
 
@@ -1000,27 +1000,39 @@ main {
 }
 
 .console-tabs {
-  display: flex;
-  gap: 8px;
+  display: inline-flex;
+  gap: 6px;
+  background: rgba(56, 109, 131, 0.08);
+  padding: 4px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(56, 109, 131, 0.12);
 }
 
 .tab-btn {
-  background: none;
+  background: transparent;
   border: 1px solid transparent;
-  padding: 8px 18px;
+  padding: 8px 22px;
   border-radius: var(--radius-full);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-btn:hover:not(.active) {
+  color: var(--deep-navy);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .tab-btn.active {
   background: #ffffff;
-  border-color: rgba(56, 109, 131, 0.2);
+  border-color: rgba(56, 109, 131, 0.16);
   color: var(--ocean-blue);
-  box-shadow: 0 2px 8px rgba(32, 55, 70, 0.06);
+  box-shadow: 0 2px 10px rgba(32, 55, 70, 0.08);
 }
 
 .console-body {
@@ -2346,6 +2358,24 @@ main {
 }
 
 @media (max-width: 600px) {
+  .console-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px 20px;
+  }
+
+  .console-tabs {
+    width: 100%;
+    display: flex;
+  }
+
+  .console-tabs .tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 8px 12px;
+  }
+
   .section-padding {
     padding: 48px 0;
   }

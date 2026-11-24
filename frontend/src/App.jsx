@@ -6,7 +6,7 @@ import MemberDashboard from './components/MemberDashboard'
 import QRPassModal from './components/QRPassModal'
 import StaffDashboard from './components/StaffDashboard'
 import AIAssistantPage from './components/AIAssistantPage'
-import { getStoredUser, authApi, aiApi } from './services/api'
+import { getStoredUser, authApi } from './services/api'
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(getStoredUser())
@@ -20,11 +20,6 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('tiers')
   const [selectedPlanToast, setSelectedPlanToast] = useState(null)
   const [contactSubmitted, setContactSubmitted] = useState(false)
-  const [aiQuery, setAiQuery] = useState('')
-  const [aiLoading, setAiLoading] = useState(false)
-  const [aiResponse, setAiResponse] = useState(
-    '“38 esteemed members are scheduled for renewal this week. Automated reminders have been dispatched with an anticipated 98.4% retention rate.”'
-  )
 
   const handleLogout = async () => {
     await authApi.logout()
@@ -62,44 +57,6 @@ export default function App() {
       return () => clearTimeout(timer)
     }
   }, [selectedPlanToast])
-
-  const handleAiAsk = async (question) => {
-    if (!question.trim() || aiLoading) return
-
-    setAiLoading(true)
-
-    try {
-      const data = await aiApi.chat(question)
-
-      if (!data.success) {
-        throw new Error(data.message || 'AI request failed')
-      }
-
-      setAiResponse(data.answer)
-      setAiQuery('')
-    } catch (error) {
-      console.error('MemberPass AI error:', error)
-      setAiResponse('MemberPass AI is ready: 42 yogis verified today, 98.4% retention forecast, and all studio pass scans operating in real time.')
-    } finally {
-      setAiLoading(false)
-    }
-  }
-
-  const handleAiSimulate = (key) => {
-    const prompts = {
-      renewals: 'How can I check membership renewals?',
-      attendance: 'How can I view attendance history?',
-      tiers: 'What membership plans are available?',
-      passes: 'How does the digital QR pass work?'
-    }
-
-    if (prompts[key]) handleAiAsk(prompts[key])
-  }
-
-  const handleCustomAiSubmit = (e) => {
-    e.preventDefault()
-    handleAiAsk(aiQuery)
-  }
 
   const handleContactSubmit = (e) => {
     e.preventDefault()
@@ -687,14 +644,6 @@ export default function App() {
                     Yoga Tiers
                   </button>
                   <button
-                    className={`tab-btn ${activeTab === 'ai' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('ai')}
-                    role="tab"
-                    aria-selected={activeTab === 'ai'}
-                  >
-                    AI Yoga Assistant
-                  </button>
-                  <button
                     className={`tab-btn ${activeTab === 'telemetry' ? 'active' : ''}`}
                     onClick={() => setActiveTab('telemetry')}
                     role="tab"
@@ -745,71 +694,6 @@ export default function App() {
                             <div className="progress-bar" style={{ width: '72%' }}></div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'ai' && (
-                  <div className="tab-pane-content fade-in">
-                    <div className="pane-split">
-                      <div className="pane-narrative">
-                        <h4>Conversational Studio Intelligence</h4>
-                        <p>
-                          Inquire directly regarding studio attendance, practitioner retention, and class schedules.
-                          Select a prompt below or enter an inquiry:
-                        </p>
-                        <div className="prompt-chips-wrap">
-                          <button className="prompt-pill" onClick={() => handleAiSimulate('renewals')}>
-                            "Who expires this week?"
-                          </button>
-                          <button className="prompt-pill" onClick={() => handleAiSimulate('attendance')}>
-                            "Today's yoga class attendance"
-                          </button>
-                          <button className="prompt-pill" onClick={() => handleAiSimulate('tiers')}>
-                            "Membership tier breakdown"
-                          </button>
-                          <button className="prompt-pill" onClick={() => handleAiSimulate('passes')}>
-                            "Digital QR pass status"
-                          </button>
-                        </div>
-                        <div style={{ marginTop: '18px' }}>
-                          <button
-                            type="button"
-                            className="btn-outline btn-sm"
-                            onClick={() => {
-                              setCurrentView('ai')
-                              scrollToTop()
-                            }}
-                            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-                          >
-                            <span style={{ color: 'var(--coral)' }}>✦</span>
-                            <span>Open Dedicated AI Assistant Page</span>
-                            <span className="btn-arrow">→</span>
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="pane-widget chat-container">
-                        <div className="chat-message-bubble">
-                          <div className="chat-avatar-crest">🌊</div>
-                          <div className="chat-message-text">
-                            <span className="chat-author">MemberPass Intelligence:</span>
-                            <p>{aiResponse}</p>
-                          </div>
-                        </div>
-
-                        <form className="console-chat-input" onSubmit={handleCustomAiSubmit}>
-                          <input
-                            type="text"
-                            value={aiQuery}
-                            onChange={(e) => setAiQuery(e.target.value)}
-                            placeholder="Ask MemberPass AI (e.g. renewals, attendance, yoga passes)..."
-                          />
-                          <button type="submit" className="chat-send-btn" aria-label="Submit inquiry" disabled={aiLoading}>
-                            <i className="fa-solid fa-paper-plane"></i>
-                          </button>
-                        </form>
                       </div>
                     </div>
                   </div>
