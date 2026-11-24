@@ -41,6 +41,7 @@ export default function StaffDashboard({ currentUser, onLogout, onNavigateAI }) 
   const [absenteeNotice, setAbsenteeNotice] = useState('');
 
   const scanHandledRef = useRef(false);
+  const checkingRef = useRef(false);
 
   const loadAttendanceHistory = async () => {
     setHistoryLoading(true);
@@ -265,11 +266,9 @@ export default function StaffDashboard({ currentUser, onLogout, onNavigateAI }) 
   useEffect(() => {
     if (!monitorPassCode || !monitorUntil) return undefined;
 
-    let checking = false;
-
     const checkMembershipAgain = async () => {
-      if (checking) return;
-      checking = true;
+      if (checkingRef.current) return;
+      checkingRef.current = true;
 
       try {
         if (Date.now() >= monitorUntil) {
@@ -327,7 +326,7 @@ export default function StaffDashboard({ currentUser, onLogout, onNavigateAI }) 
       } catch {
         // Keep monitoring until the five-minute deadline.
       } finally {
-        checking = false;
+        checkingRef.current = false;
       }
     };
 

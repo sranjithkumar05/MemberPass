@@ -12,7 +12,7 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   CSS RESETS & CONTAINER FOR AI ASSISTANT
+   1. PAGE CONTAINER & CENTERING WRAPPER
    -------------------------------------------------------------------------- */
 .ai-page-wrapper {
   width: 100%;
@@ -22,10 +22,11 @@
     radial-gradient(at 10% 5%, rgba(184, 214, 223, 0.35) 0px, transparent 45%),
     radial-gradient(at 90% 12%, rgba(233, 216, 194, 0.3) 0px, transparent 40%),
     radial-gradient(at 50% 95%, rgba(184, 214, 223, 0.25) 0px, transparent 50%);
-  padding: 36px 24px 60px;
+  padding: 40px 24px 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   box-sizing: border-box;
 }
 
@@ -55,18 +56,22 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: stretch;
+  gap: 24px;
+  box-sizing: border-box;
 }
 
 /* --------------------------------------------------------------------------
-   ASSISTANT HERO HEADER
+   2. ASSISTANT HERO HEADER
    -------------------------------------------------------------------------- */
 .ai-page-hero-header {
   text-align: center;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 6px 0 10px;
+  padding: 4px 0 8px;
+  box-sizing: border-box;
 }
 
 .ai-badge-pill {
@@ -99,6 +104,7 @@
   margin: 0 0 10px;
   line-height: 1.22;
   letter-spacing: -0.02em;
+  text-align: center;
 }
 
 .ai-hero-subtitle {
@@ -107,10 +113,11 @@
   max-width: 640px;
   margin: 0 auto;
   line-height: 1.55;
+  text-align: center;
 }
 
 /* --------------------------------------------------------------------------
-   CONTEXT STRIP: GUEST MODE vs AUTHENTICATED MEMBER
+   3. CONTEXT STRIP: GUEST MODE vs AUTHENTICATED MEMBER
    -------------------------------------------------------------------------- */
 .ai-context-banner {
   width: 100%;
@@ -126,13 +133,13 @@
 
 .ai-context-banner.guest {
   background: rgba(184, 214, 223, 0.3);
-  border: 1px solid rgba(56, 109, 131, 0.24);
+  border: 1.5px solid rgba(56, 109, 131, 0.24);
   box-shadow: 0 2px 10px rgba(56, 109, 131, 0.04);
 }
 
 .ai-context-banner.authenticated {
   background: rgba(233, 216, 194, 0.25);
-  border: 1px solid rgba(56, 109, 131, 0.2);
+  border: 1.5px solid rgba(56, 109, 131, 0.2);
   box-shadow: 0 2px 10px rgba(32, 55, 70, 0.03);
 }
 
@@ -160,8 +167,8 @@
 }
 
 .ai-context-banner.authenticated .context-icon-circle {
-  background: rgba(56, 109, 131, 0.16);
-  color: var(--ocean-blue, #386D83);
+  background: rgba(42, 128, 104, 0.16);
+  color: #1e6b56;
 }
 
 .context-text-wrap {
@@ -255,28 +262,29 @@
 }
 
 /* --------------------------------------------------------------------------
-   PREMIUM CHAT INTERFACE CARD
+   4. CHAT INTERFACE CARD
    -------------------------------------------------------------------------- */
 .ai-chat-card {
   width: 100%;
   background: #ffffff;
-  border: 1px solid rgba(56, 109, 131, 0.16);
-  border-radius: 22px;
-  box-shadow: 0 10px 32px rgba(32, 55, 70, 0.06), 0 1px 3px rgba(32, 55, 70, 0.04);
+  border: 1.5px solid rgba(56, 109, 131, 0.16);
+  border-radius: 24px;
+  box-shadow: 0 12px 36px rgba(32, 55, 70, 0.06), 0 2px 6px rgba(32, 55, 70, 0.03);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-/* Top bar of chat card */
+/* Card Topbar */
 .chat-card-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 18px 28px;
   background: #ffffff;
   border-bottom: 1px solid rgba(56, 109, 131, 0.12);
+  box-sizing: border-box;
 }
 
 .topbar-assistant-identity {
@@ -286,8 +294,8 @@
 }
 
 .identity-avatar {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   background: linear-gradient(135deg, #386D83 0%, #203746 100%);
   color: #ffffff;
@@ -295,16 +303,17 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   box-shadow: 0 4px 12px rgba(56, 109, 131, 0.25);
   position: relative;
+  flex-shrink: 0;
 }
 
 .avatar-sparkle-dot {
   position: absolute;
   top: -3px;
   right: -3px;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--coral, #D98D70);
 }
 
@@ -315,7 +324,7 @@
 }
 
 .identity-name {
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   font-weight: 600;
   color: var(--deep-navy, #203746);
   display: flex;
@@ -393,39 +402,49 @@
 }
 
 /* --------------------------------------------------------------------------
-   CHAT BODY: WELCOME SCREEN vs CONVERSATION THREAD
+   5. CHAT CARD BODY & WELCOME SCREEN
    -------------------------------------------------------------------------- */
 .chat-card-body {
-  padding: 28px 28px 20px;
+  padding: 32px 32px 24px;
   background: #ffffff;
   min-height: 440px;
   display: flex;
   flex-direction: column;
+  width: 100%;
   box-sizing: border-box;
 }
 
-/* ==========================================================================
-   WELCOME SCREEN (EMPTY CONVERSATION STATE)
-   ========================================================================== */
-.welcome-intro-block {
-  text-align: center;
-  max-width: 660px;
-  margin: 10px auto 30px;
+.welcome-chat-layout {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  gap: 28px;
+  box-sizing: border-box;
+}
+
+.welcome-intro-block {
+  text-align: center;
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
 }
 
 .welcome-lotus-wrap {
-  width: 68px;
-  height: 68px;
+  width: 64px;
+  height: 64px;
   border-radius: 20px;
   background: linear-gradient(135deg, rgba(184, 214, 223, 0.4) 0%, rgba(233, 216, 194, 0.4) 100%);
   border: 1px solid rgba(56, 109, 131, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   color: var(--ocean-blue, #386D83);
   font-size: 1.8rem;
   box-shadow: 0 4px 16px rgba(56, 109, 131, 0.08);
@@ -436,31 +455,37 @@
   font-size: 1.7rem;
   font-weight: 600;
   color: var(--deep-navy, #203746);
-  margin: 0 0 8px;
+  margin: 0;
   line-height: 1.3;
+  text-align: center;
 }
 
 .welcome-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   color: var(--text-secondary, #5A7184);
   line-height: 1.55;
   margin: 0;
+  text-align: center;
 }
 
-/* ==========================================================================
-   5 SUGGESTED QUESTION CARDS - 2 COLUMN RESPONSIVE GRID
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   6. 5 SUGGESTED TOPIC CARDS - 2 COLUMN RESPONSIVE GRID
+   -------------------------------------------------------------------------- */
 .suggestions-section {
   width: 100%;
-  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
 }
 
 .suggestions-label-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
-  padding: 0 2px;
+  padding: 0 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .suggestions-heading {
@@ -491,11 +516,12 @@
 .suggested-prompt-card {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 16px;
   background: #ffffff;
-  border: 1px solid rgba(56, 109, 131, 0.18);
+  border: 1.5px solid rgba(56, 109, 131, 0.18);
   border-radius: 16px;
-  padding: 16px 20px;
+  padding: 18px 22px;
   text-align: left;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -504,7 +530,7 @@
   overflow: hidden;
   width: 100%;
   box-sizing: border-box;
-  min-height: 82px;
+  min-height: 84px;
 }
 
 /* Card 5 spans 2 columns gracefully on desktop for visual balance */
@@ -551,15 +577,18 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
   gap: 3px;
   overflow: hidden;
 }
 
 .prompt-title {
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   font-weight: 600;
   color: var(--deep-navy, #203746);
   line-height: 1.3;
+  text-align: left;
   transition: color 0.2s ease;
 }
 
@@ -572,14 +601,15 @@
   color: var(--text-secondary, #5A7184);
   line-height: 1.4;
   white-space: normal;
+  text-align: left;
 }
 
 .prompt-arrow-cue {
   color: rgba(56, 109, 131, 0.4);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   flex-shrink: 0;
   transition: all 0.2s ease;
-  padding-left: 4px;
+  padding-left: 6px;
 }
 
 .suggested-prompt-card:hover:not(:disabled) .prompt-arrow-cue {
@@ -587,9 +617,9 @@
   transform: translateX(4px);
 }
 
-/* ==========================================================================
-   CONVERSATION THREAD (MESSAGE BUBBLES)
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   7. CONVERSATION THREAD (MESSAGE BUBBLES)
+   -------------------------------------------------------------------------- */
 .chat-thread-container {
   display: flex;
   flex-direction: column;
@@ -866,12 +896,13 @@
 }
 
 /* --------------------------------------------------------------------------
-   CHAT INPUT COMPOSER
+   8. CHAT INPUT COMPOSER
    -------------------------------------------------------------------------- */
 .chat-composer-dock {
   background: #ffffff;
   border-top: 1px solid rgba(56, 109, 131, 0.12);
-  padding: 14px 24px 18px;
+  padding: 18px 28px 22px;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -882,8 +913,10 @@
   gap: 8px;
   overflow-x: auto;
   padding-bottom: 12px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   scrollbar-width: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 .followup-chips-row::-webkit-scrollbar {
   display: none;
@@ -924,15 +957,24 @@
   cursor: not-allowed;
 }
 
-/* Modern Chat Input Box */
-.composer-input-box {
+/* Composer Form & Input Box */
+.composer-form {
+  width: 100%;
   display: flex;
-  align-items: flex-end;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.composer-input-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   background: #F6F9F8;
-  border: 1px solid rgba(56, 109, 131, 0.2);
-  border-radius: 24px;
-  padding: 6px 8px 6px 18px;
+  border: 1.5px solid rgba(56, 109, 131, 0.2);
+  border-radius: 28px;
+  padding: 8px 12px 8px 22px;
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
@@ -940,22 +982,23 @@
 .composer-input-box:focus-within {
   background: #ffffff;
   border-color: var(--ocean-blue, #386D83);
-  box-shadow: 0 0 0 3px rgba(56, 109, 131, 0.12);
+  box-shadow: 0 0 0 3px rgba(56, 109, 131, 0.15);
 }
 
 .composer-textarea {
   flex: 1;
+  width: 100%;
   border: none;
   background: transparent;
   outline: none;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   color: var(--deep-navy, #203746);
-  padding: 8px 0;
+  padding: 6px 0;
   resize: none;
-  min-height: 24px;
+  min-height: 26px;
   max-height: 120px;
-  line-height: 1.45;
+  line-height: 1.5;
   box-sizing: border-box;
 }
 
@@ -969,13 +1012,13 @@
 }
 
 .composer-send-btn {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 1rem;
   background: rgba(56, 109, 131, 0.12);
   color: rgba(56, 109, 131, 0.4);
   flex-shrink: 0;
@@ -1004,10 +1047,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 8px;
-  padding: 0 6px;
+  margin-top: 4px;
+  padding: 0 8px;
   font-size: 0.74rem;
   color: var(--text-secondary, #5A7184);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .keyboard-shortcut-hint kbd {
@@ -1027,11 +1072,19 @@
 }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVE DESIGN BREAKPOINTS
+   9. RESPONSIVE DESIGN BREAKPOINTS
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
   .ai-page-container {
     max-width: 95%;
+  }
+
+  .chat-card-body {
+    padding: 24px 24px 20px;
+  }
+
+  .chat-composer-dock {
+    padding: 16px 24px 20px;
   }
 }
 
@@ -1067,11 +1120,11 @@
   }
 
   .chat-card-topbar {
-    padding: 14px 16px;
+    padding: 14px 18px;
   }
 
   .chat-card-body {
-    padding: 18px 16px 14px;
+    padding: 20px 16px;
     min-height: 380px;
   }
 
@@ -1094,7 +1147,7 @@
   }
 
   .chat-composer-dock {
-    padding: 12px 16px 14px;
+    padding: 12px 16px 16px;
   }
 
   .composer-dock-notes {

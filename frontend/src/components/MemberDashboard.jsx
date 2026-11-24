@@ -1,10 +1,12 @@
 
 import { useState, useEffect } from 'react';
-import { memberApi, paymentApi } from '../services/api';
+import { memberApi } from '../services/api';
+
+const getCurrentCalendarYear = () => new Date().getFullYear();
 
 export default function MemberDashboard({
-  currentUser,
-  onLogout,
+  _currentUser,
+  _onLogout,
   onNavigateToPlans,
   onOpenQRModal,
   onNavigateAI
@@ -23,11 +25,6 @@ export default function MemberDashboard({
   const [pauseLoading, setPauseLoading] = useState(false);
   const [pauseMessage, setPauseMessage] = useState('');
   const [pauseError, setPauseError] = useState('');
-
-  useEffect(() => {
-    loadDashboardData();
-    loadAttendanceHistory();
-  }, []);
 
   const loadDashboardData = async () => {
     try {
@@ -75,6 +72,11 @@ export default function MemberDashboard({
       setAttendanceLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadDashboardData();
+    loadAttendanceHistory();
+  }, []);
 
   // M3 Task 9: Submit membership pause request
   const handlePauseMembership = async (event) => {
@@ -155,12 +157,10 @@ export default function MemberDashboard({
   const isEnded = status === 'ended';
 
   // Check whether the member has already used the pause option this calendar year.
-  const currentYear = new Date().getFullYear();
   const pauseHistory = membership?.pauseHistory || [];
-
   const hasPausedThisYear = pauseHistory.some((entry) => {
     if (!entry.requestedAt) return false;
-    return new Date(entry.requestedAt).getFullYear() === currentYear;
+    return new Date(entry.requestedAt).getFullYear() === getCurrentCalendarYear();
   });
 
   const canPauseMembership = isActive && !hasPausedThisYear;
@@ -181,6 +181,12 @@ export default function MemberDashboard({
       {copyToast && (
         <div className="dashboard-toast fade-in">
           <span>✦ Cryptographic Pass Code Copied to Clipboard</span>
+        </div>
+      )}
+
+      {error && (
+        <div className="dashboard-alert error" style={{ margin: '16px 0', padding: '12px 16px', background: '#ffebee', color: '#c62828', borderRadius: '8px' }}>
+          <span>{error}</span>
         </div>
       )}
 

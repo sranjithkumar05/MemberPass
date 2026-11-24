@@ -283,10 +283,10 @@ You can select and activate any plan with secure Razorpay test checkout under th
 
 1. Log in and navigate to your **Member Dashboard**.
 2. Locate the **Membership Status** card on your dashboard.
-3. Click the **Pause Membership** button.
-4. While paused, your expiration countdown stops and class usage is temporarily suspended until you choose to resume.
+3. Select your desired pause duration between **1 and 15 days**, then click **Pause Membership**.
+4. While paused, your expiration date automatically extends by the selected days and class usage is suspended until auto-resume or manual reactivation.
 
-*Members can pause an active pass once per billing cycle at no extra charge.*`
+*Note: Members can pause an active pass once per calendar year (1–15 days) at no extra charge.*`
       });
     }
 

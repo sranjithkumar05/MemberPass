@@ -315,17 +315,19 @@ export default function AIAssistantPage({
               /* -------------------------------------------------------------------
                  WELCOME SCREEN WITH 5 SUGGESTED TOPIC CARDS
                  ------------------------------------------------------------------- */
-              <div className="welcome-intro-block">
-                <div className="welcome-lotus-wrap">
-                  <i className="fa-solid fa-spa" />
+              <div className="welcome-chat-layout">
+                <div className="welcome-intro-block">
+                  <div className="welcome-lotus-wrap">
+                    <i className="fa-solid fa-spa" />
+                  </div>
+                  <h2 className="welcome-title">How can I assist your wellness practice today?</h2>
+                  <p className="welcome-subtitle">
+                    Ask me about your live membership status, attended classes, digital QR pass, or studio policies. Select a topic below to get started instantly:
+                  </p>
                 </div>
-                <h2 className="welcome-title">How can I assist your wellness practice today?</h2>
-                <p className="welcome-subtitle">
-                  Ask me about your live membership status, attended classes, digital QR pass, or studio policies. Select a topic below to get started instantly:
-                </p>
 
                 {/* 5 Suggested Question Cards in 2-Column Responsive Grid */}
-                <div className="suggestions-section" style={{ width: '100%', marginTop: '28px' }}>
+                <div className="suggestions-section">
                   <div className="suggestions-label-strip">
                     <span className="suggestions-heading">
                       <i className="fa-solid fa-wand-magic-sparkles" />
