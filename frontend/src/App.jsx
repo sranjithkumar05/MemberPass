@@ -412,8 +412,8 @@ export default function App() {
                 <div className="hero-image-stage">
                   <div className="coastal-image-container">
                     <img
-                      src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80"
-                      srcSet="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80 1200w"
+                      src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80&fm=webp"
+                      srcSet="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=480&q=70&fm=webp 480w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=75&fm=webp 800w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
                       sizes="(max-width: 768px) 100vw, 55vw"
                       alt="Serene Mediterranean coastal yoga retreat in natural sunlight"
                       className="hero-retreat-photo"
@@ -497,8 +497,8 @@ export default function App() {
             {/* Coastal Banner Image */}
             <div className="about-hero-banner">
               <img
-                src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75"
-                srcSet="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80 1200w"
+                src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75&fm=webp"
+                srcSet="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=480&q=70&fm=webp 480w, https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75&fm=webp 800w, https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
                 sizes="(max-width: 768px) 100vw, 1120px"
                 alt="Mindful coastal yoga meditation by the Mediterranean sea"
                 className="about-banner-img"
