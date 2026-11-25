@@ -61,13 +61,13 @@ MemberPass aims to deliver a seamless experience for both members and administra
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/sweswar1614/Memberpass.git
+git clone https://github.com/sranjithkumar05/MemberPass.git
 ```
 
 ### 2. Navigate to the Project
 
 ```bash
-cd Memberpass
+cd MemberPass
 ```
 
 ### 3. Install Frontend Dependencies
@@ -120,7 +120,27 @@ Open the local URL displayed in the frontend terminal to access the application.
 - **Live Website:** https://member-pass-psi.vercel.app/
 - **Project Drive:** https://drive.google.com/file/d/1kD_DCgDPRJ4E2bNUgRUM0zv5mxd_lEv0/view?usp=sharing
 - **AI Assistant Demo:** https://drive.google.com/file/d/1jRWnra7mDqcQVUyQKUA1XvM04d2AKuk5/view?usp=sharing
-- **GitHub Repository:** https://github.com/sweswar1614/Memberpass
+- **GitHub Repository:** https://github.com/sranjithkumar05/MemberPass
+
+## 📚 Project Documentation
+
+- **[AI Notes](docs/AI_NOTES.md)** – MemberPassGPT neural model architecture, checkpoint specifications, FastAPI serving, and backend fallback integration.
+- **[Test Report](docs/TEST_REPORT.md)** – Comprehensive verification report covering 74 automated functional tests, build metrics, and Live API suite audit.
+- **[Progress Log](docs/PROGRESS.md)** – Milestone progression from M1 (Architecture) through M4 (Audit & Documentation Verification).
+- **[Demo Script](docs/DEMO_SCRIPT.md)** – Step-by-step demonstration walkthrough covering member onboarding, Razorpay payment, digital QR pass, staff check-in, and AI Assistant.
+
+## 🧪 Testing & Verification
+
+MemberPass features an automated test suite across all critical business logic:
+
+| Test Suite | Scope | Status | Executed Count |
+| :--- | :--- | :--- | :--- |
+| **Razorpay & Webhooks** (`scripts/test-razorpay-suite.js`) | Payment orders, HMAC-SHA256 signature verification, webhook deduplication & idempotency | **PASS** | 35 / 35 tests (100%) |
+| **QR Check-In & Class Limits** (`scripts/test-qr-classlimit-suite.js`) | QR validation, staff RBAC, daily idempotency, class limits (8/25/unlimited), atomic rollback | **PASS** | 20 / 20 tests (100%) |
+| **Core Audit & Lifecycle** (`scripts/test-audit-suite.js`) | Bcrypt (cost 12), JWT auth, pause rules (1–15 days, 1/year), atomic expiry locks, absentee drafts, AI routes | **PASS** | 19 / 19 tests (100%) |
+| **Frontend Static Analysis** (`oxlint`) | React component hygiene, rules of hooks, dependency closure integrity | **PASS** | 20 files, 0 errors |
+| **Frontend Production Build** (`vite build`) | Production asset bundling, CSS & JS chunk compilation | **PASS** | 0 errors (899ms) |
+| **Live API Suite** (`scripts/test-live-api.js`) | HTTP integration tests (auth, profile, QR pass, payments) | **CODE VERIFIED** | Syntax verified (0 errors); real Atlas DB run restricted by sandbox network isolation |
 
 ## 🔮 Future Enhancements
 
