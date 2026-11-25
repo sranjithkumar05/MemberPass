@@ -1,12 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import './App.css'
-import AuthModal from './components/AuthModal'
 import PlansSection from './components/PlansSection'
-import MemberDashboard from './components/MemberDashboard'
-import QRPassModal from './components/QRPassModal'
-import StaffDashboard from './components/StaffDashboard'
-import AIAssistantPage from './components/AIAssistantPage'
 import { getStoredUser, authApi } from './services/api'
+
+// Code-split non-critical views and modals to optimize initial landing bundle
+const MemberDashboard = lazy(() => import('./components/MemberDashboard'))
+const StaffDashboard = lazy(() => import('./components/StaffDashboard'))
+const AIAssistantPage = lazy(() => import('./components/AIAssistantPage'))
+const AuthModal = lazy(() => import('./components/AuthModal'))
+const QRPassModal = lazy(() => import('./components/QRPassModal'))
+
+const ViewFallback = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh', padding: '60px 20px' }}>
+    <div className="crest-spinner" aria-label="Loading..." />
+  </div>
+)
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(getStoredUser())
@@ -290,56 +298,60 @@ export default function App() {
 
       {currentView === 'ai' ? (
         <main className="main-viewport">
-          <AIAssistantPage
-            currentUser={currentUser}
-            onNavigateHome={() => {
-              setCurrentView('landing')
-              scrollToTop()
-            }}
-            onNavigateDashboard={() => {
-              if (currentUser) {
-                setCurrentView('dashboard')
-              } else {
-                setAuthModalMode('login')
+          <Suspense fallback={<ViewFallback />}>
+            <AIAssistantPage
+              currentUser={currentUser}
+              onNavigateHome={() => {
+                setCurrentView('landing')
+                scrollToTop()
+              }}
+              onNavigateDashboard={() => {
+                if (currentUser) {
+                  setCurrentView('dashboard')
+                } else {
+                  setAuthModalMode('login')
+                  setAuthModalOpen(true)
+                }
+                scrollToTop()
+              }}
+              onOpenAuthModal={(mode = 'login') => {
+                setAuthModalMode(mode)
                 setAuthModalOpen(true)
-              }
-              scrollToTop()
-            }}
-            onOpenAuthModal={(mode = 'login') => {
-              setAuthModalMode(mode)
-              setAuthModalOpen(true)
-            }}
-          />
+              }}
+            />
+          </Suspense>
         </main>
       ) : currentView === 'dashboard' && currentUser ? (
         <main className="main-viewport">
-          {['staff', 'admin'].includes(currentUser.role) ? (
-            <StaffDashboard
-              currentUser={currentUser}
-              onLogout={handleLogout}
-              onNavigateAI={() => {
-                setCurrentView('ai')
-                scrollToTop()
-              }}
-            />
-          ) : (
-            <MemberDashboard
-              currentUser={currentUser}
-              onLogout={handleLogout}
-              onNavigateToPlans={() => {
-                setCurrentView('landing')
-                setTimeout(() => {
-                  const el = document.getElementById('plans')
-                  el?.scrollIntoView({ behavior: 'smooth' })
-                }, 120)
-              }}
-              onOpenQRModal={() => setQrModalOpen(true)}
-              onNavigateAI={() => {
-                setCurrentView('ai')
-                scrollToTop()
-              }}
-            />
-          )}
+          <Suspense fallback={<ViewFallback />}>
+            {['staff', 'admin'].includes(currentUser.role) ? (
+              <StaffDashboard
+                currentUser={currentUser}
+                onLogout={handleLogout}
+                onNavigateAI={() => {
+                  setCurrentView('ai')
+                  scrollToTop()
+                }}
+              />
+            ) : (
+              <MemberDashboard
+                currentUser={currentUser}
+                onLogout={handleLogout}
+                onNavigateToPlans={() => {
+                  setCurrentView('landing')
+                  setTimeout(() => {
+                    const el = document.getElementById('plans')
+                    el?.scrollIntoView({ behavior: 'smooth' })
+                  }, 120)
+                }}
+                onOpenQRModal={() => setQrModalOpen(true)}
+                onNavigateAI={() => {
+                  setCurrentView('ai')
+                  scrollToTop()
+                }}
+              />
+            )}
+          </Suspense>
         </main>
       ) : (
         <main className="main-viewport">
@@ -400,10 +412,15 @@ export default function App() {
                 <div className="hero-image-stage">
                   <div className="coastal-image-container">
                     <img
-                      src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1600&q=85"
+                      src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80"
+                      srcSet="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80 1200w"
+                      sizes="(max-width: 768px) 100vw, 55vw"
                       alt="Serene Mediterranean coastal yoga retreat in natural sunlight"
                       className="hero-retreat-photo"
                       loading="eager"
+                      fetchPriority="high"
+                      width="1200"
+                      height="800"
                     />
                     <div className="hero-photo-gradient-veil" />
                   </div>
@@ -480,10 +497,15 @@ export default function App() {
             {/* Coastal Banner Image */}
             <div className="about-hero-banner">
               <img
-                src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=85"
+                src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75"
+                srcSet="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80 1200w"
+                sizes="(max-width: 768px) 100vw, 1120px"
                 alt="Mindful coastal yoga meditation by the Mediterranean sea"
                 className="about-banner-img"
                 loading="lazy"
+                decoding="async"
+                width="1200"
+                height="600"
               />
               <div className="about-banner-caption">
                 <h3>Where Ancient Mindfulness Meets Cutting-Edge Technology</h3>
@@ -1088,19 +1110,27 @@ export default function App() {
       </footer>
 
       {/* Authentication Modal */}
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        onSuccess={handleAuthSuccess}
-        initialMode={authModalMode}
-      />
+      {authModalOpen && (
+        <Suspense fallback={null}>
+          <AuthModal
+            isOpen={authModalOpen}
+            onClose={() => setAuthModalOpen(false)}
+            onSuccess={handleAuthSuccess}
+            initialMode={authModalMode}
+          />
+        </Suspense>
+      )}
 
       {/* Fullscreen Digital QR Pass Scanner Modal */}
-      <QRPassModal
-        isOpen={qrModalOpen}
-        onClose={() => setQrModalOpen(false)}
-        currentUser={currentUser}
-      />
+      {qrModalOpen && (
+        <Suspense fallback={null}>
+          <QRPassModal
+            isOpen={qrModalOpen}
+            onClose={() => setQrModalOpen(false)}
+            currentUser={currentUser}
+          />
+        </Suspense>
+      )}
     </div>
   )
 }
