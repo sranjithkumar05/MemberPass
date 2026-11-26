@@ -324,16 +324,11 @@ Observed metrics from a clean-incognito mobile audit run:
 
 ## What I Would Do Differently With More Time
 
-*The following reflective prompts represent areas identified for architectural and personal refinement. Fill in with your personal insights:*
+1. **Integration Testing Earlier** — I would begin integration testing earlier in development so payment verification, QR attendance, membership lifecycle rules, and database interactions could be validated together sooner, reducing late-stage debugging.
 
-1. **Earlier Integration Testing**:
-   - `[Your reflection: e.g., Set up end-to-end database mock fixtures and automated HTTP integration runs early in Milestone 1 rather than relying primarily on isolated functional unit test suites later in development.]`
+2. **Offline QR Pass Support** — I would extend MemberPass with secure offline QR pass access and better connectivity handling, so members and studio staff could experience more reliable check-in during temporary network interruptions.
 
-2. **Advanced Frontend State & Offline Caching**:
-   - `[Your reflection: e.g., Implement a service worker with offline IndexedDB caching for digital QR passes, allowing members to display their passes at the studio front desk even during intermittent mobile internet outages.]`
-
-3. **Multi-Location Studio Architecture**:
-   - `[Your reflection: e.g., Decouple studio branches into a multi-tenant schema with location-specific class schedules, room allocations, and centralized member pass quotas.]`
+3. **Scalable Studio Management** — I would evolve the architecture to support multiple studio locations, configurable membership plans, and location-specific staff management while maintaining the security and integrity of membership and attendance records.
 
 ---
 
