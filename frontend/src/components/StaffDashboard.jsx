@@ -33,12 +33,14 @@ export default function StaffDashboard({ currentUser, onLogout, onNavigateAI }) 
   const [reminderMessage, setReminderMessage] = useState('');
   const [reminderError, setReminderError] = useState(false);
 
-  // M3 Task 11: Absentee Drafts
+  // M3 Task 11: Absentee Drafts (Human-in-the-loop review)
   const [absenteeDrafts, setAbsenteeDrafts] = useState([]);
   const [absenteeDays, setAbsenteeDays] = useState(14);
   const [absenteeLoading, setAbsenteeLoading] = useState(false);
   const [absenteeError, setAbsenteeError] = useState('');
   const [absenteeNotice, setAbsenteeNotice] = useState('');
+  // In-memory record associating membership ID with exact approved message content: { [membershipId]: exactMessage }
+  const [approvedDraftMessages, setApprovedDraftMessages] = useState({});
 
   const scanHandledRef = useRef(false);
   const checkingRef = useRef(false);
@@ -382,12 +384,43 @@ export default function StaffDashboard({ currentUser, onLogout, onNavigateAI }) 
     }
   };
 
-  const handleCopyDraft = async (draft) => {
+  const handleEditDraft = (membershipId, updatedMessage) => {
+    setAbsenteeDrafts((prev) =>
+      prev.map((d) => (d.membershipId === membershipId ? { ...d, message: updatedMessage } : d))
+    );
+    // Invalidate approval immediately if edited message differs from approved message
+    setApprovedDraftMessages((prev) => {
+      if (prev[membershipId] && prev[membershipId] !== updatedMessage) {
+        const next = { ...prev };
+        delete next[membershipId];
+        return next;
+      }
+      return prev;
+    });
+  };
+
+  const handleApproveAndCopyDraft = async (draft) => {
+    const trimmed = (draft.message || '').trim();
+    if (!trimmed) {
+      setAbsenteeNotice('Cannot approve an empty message draft.');
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(draft.message);
-      setAbsenteeNotice(`Draft copied for ${draft.name}`);
+      // Associate approval strictly with the exact message text at this moment
+      setApprovedDraftMessages((prev) => ({
+        ...prev,
+        [draft.membershipId]: draft.message
+      }));
+      setAbsenteeNotice(`✓ Draft reviewed, approved, and copied to clipboard for ${draft.name}`);
     } catch {
-      setAbsenteeNotice('Unable to copy message. Please copy it manually.');
+      // Still record approval even if clipboard API is blocked
+      setApprovedDraftMessages((prev) => ({
+        ...prev,
+        [draft.membershipId]: draft.message
+      }));
+      setAbsenteeNotice(`✓ Draft approved for ${draft.name}. (Clipboard access blocked; please copy manually).`);
     }
   };
 
@@ -621,56 +654,77 @@ export default function StaffDashboard({ currentUser, onLogout, onNavigateAI }) 
             </div>
           )}
 
-          {absenteeDrafts.map((draft) => (
-            <div
-              key={draft.membershipId}
-              className="attendance-history-item"
-              style={{ marginTop: '16px', padding: '16px', border: '1px solid #ddd', borderRadius: '12px' }}
-            >
-              <div className="attendance-info-col">
-                <h3>{draft.name}</h3>
-                <p className="attendance-email">{draft.email}</p>
-                {draft.phone && <p>Phone: {draft.phone}</p>}
-                <div className="attendance-tags">
-                  <span className="attendance-tag-pill plan-pill">
-                    {draft.plan}
-                  </span>
-                  <span className="attendance-tag-pill staff-pill">
-                    {draft.inactiveDays === null
-                      ? 'Never attended'
-                      : `${draft.inactiveDays} days inactive`}
-                  </span>
-                </div>
-                <p style={{ marginTop: '10px' }}>
-                  Last visit: {draft.lastAttendance
-                    ? new Date(draft.lastAttendance).toLocaleDateString('en-IN')
-                    : 'No attendance recorded'}
-                </p>
-                <p>
-                  Membership ends: {draft.membershipEndDate
-                    ? new Date(draft.membershipEndDate).toLocaleDateString('en-IN')
-                    : 'Not available'}
-                </p>
-              </div>
+          {absenteeDrafts.map((draft) => {
+            const isApproved =
+              Boolean(approvedDraftMessages[draft.membershipId]) &&
+              approvedDraftMessages[draft.membershipId] === draft.message &&
+              draft.message.trim().length > 0;
 
-              <div style={{ width: '100%', marginTop: '12px' }}>
-                <label>Message draft (staff review):</label>
-                <textarea
-                  readOnly
-                  value={draft.message}
-                  rows={5}
-                  style={{ width: '100%', marginTop: '8px', padding: '12px', borderRadius: '8px', resize: 'vertical' }}
-                />
-                <button
-                  className="staff-secondary-btn"
-                  onClick={() => handleCopyDraft(draft)}
-                  style={{ marginTop: '10px' }}
-                >
-                  Copy Message
-                </button>
+            return (
+              <div
+                key={draft.membershipId}
+                className="attendance-history-item"
+                style={{ marginTop: '16px', padding: '16px', border: '1px solid #ddd', borderRadius: '12px' }}
+              >
+                <div className="attendance-info-col">
+                  <h3>{draft.name}</h3>
+                  <p className="attendance-email">{draft.email}</p>
+                  {draft.phone && <p>Phone: {draft.phone}</p>}
+                  <div className="attendance-tags">
+                    <span className="attendance-tag-pill plan-pill">
+                      {draft.plan}
+                    </span>
+                    <span className="attendance-tag-pill staff-pill">
+                      {draft.inactiveDays === null
+                        ? 'Never attended'
+                        : `${draft.inactiveDays} days inactive`}
+                    </span>
+                  </div>
+                  <p style={{ marginTop: '10px' }}>
+                    Last visit: {draft.lastAttendance
+                      ? new Date(draft.lastAttendance).toLocaleDateString('en-IN')
+                      : 'No attendance recorded'}
+                  </p>
+                  <p>
+                    Membership ends: {draft.membershipEndDate
+                      ? new Date(draft.membershipEndDate).toLocaleDateString('en-IN')
+                      : 'Not available'}
+                  </p>
+                </div>
+
+                <div style={{ width: '100%', marginTop: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+                    <label htmlFor={`draft-msg-${draft.membershipId}`} style={{ fontWeight: 600 }}>
+                      Message draft (Staff Review & Personalization):
+                    </label>
+                    <span
+                      className={`attendance-tag-pill ${isApproved ? 'status-pill' : 'staff-pill'}`}
+                      style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.04em' }}
+                    >
+                      {isApproved ? '✓ Staff Reviewed & Approved' : '⚠ Human Review Required'}
+                    </span>
+                  </div>
+                  <textarea
+                    id={`draft-msg-${draft.membershipId}`}
+                    value={draft.message}
+                    onChange={(e) => handleEditDraft(draft.membershipId, e.target.value)}
+                    rows={5}
+                    placeholder="Review, edit, and personalize this draft before approving..."
+                    style={{ width: '100%', marginTop: '4px', padding: '12px', borderRadius: '8px', resize: 'vertical' }}
+                  />
+                  <div style={{ display: 'flex', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
+                    <button
+                      className="staff-primary-btn"
+                      onClick={() => handleApproveAndCopyDraft(draft)}
+                      style={{ width: 'auto', padding: '8px 16px', fontSize: '13px' }}
+                    >
+                      {isApproved ? 'Re-copy Approved Message' : 'Approve & Copy Message'}
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {absenteeDrafts.length > 0 && (
             <p style={{ marginTop: '16px' }}>
