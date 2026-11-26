@@ -1,5 +1,28 @@
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://memberpass.onrender.com/api';
+const normalizeApiBase = (rawUrl) => {
+  let url = (rawUrl || '').trim();
+
+  if (!url) {
+    return 'https://memberpass-gdur.onrender.com/api';
+  }
+
+  // Strip accidental trailing placeholder if the env variable name was appended literally (e.g. /VITE_API_URL)
+  url = url.replace(/\/VITE_API_URL\/?$/i, '');
+
+  // Strip trailing slashes
+  url = url.replace(/\/+$/, '');
+
+  // Ensure /api suffix is present without duplication so ${API_BASE}/plans resolves to /api/plans
+  if (!url.endsWith('/api')) {
+    url = `${url}/api`;
+  }
+
+  return url;
+};
+
+const API_BASE = normalizeApiBase(
+  import.meta.env.VITE_API_URL || 'https://memberpass-gdur.onrender.com/api'
+);
 
 export const setAuthToken = (token) => {
   if (token) {
