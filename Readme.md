@@ -39,6 +39,18 @@ MemberPass delivers a seamless experience for both members and administrators by
 
 ---
 
+## What It Does
+
+MemberPass provides exactly five core user-facing capabilities engineered for yoga studios and wellness sanctuaries:
+
+1. **Explore & Subscribe to Membership Tiers**: Members can compare studio tiers (Basic, Standard, Premium) with transparent class allocations and securely complete online membership checkout using Razorpay in test mode.
+2. **Access Instant Digital QR Passes**: Active members receive a cryptographic, high-entropy digital QR pass directly on their mobile device displaying their active plan, validity dates, and remaining classes.
+3. **Verify Attendance via Live QR Scanner**: Studio staff can validate incoming members instantly using an integrated device camera scanner or manual pass code lookup, automatically deducting class credits and logging attendance.
+4. **Pause Active Memberships**: Members can place an active plan on hold for 1 to 15 days (strictly once per calendar year), automatically shifting their renewal date forward without extra fees.
+5. **Consult the Conversational AI Assistant**: Members can ask questions about studio guidelines, check personal membership status, verify remaining classes, and calculate renewal dates with zero-hallucination real-time responses.
+
+---
+
 ## 🎯 Project Objectives
 
 - Simplify membership management and administration.
@@ -70,21 +82,23 @@ MemberPass delivers a seamless experience for both members and administrators by
 
 ---
 
-## 🧠 AI Architecture & Fallback System
+## The AI Feature
 
-MemberPass implements a dual-tier intelligent assistance architecture:
+### What It Does
+The AI Assistant provides intelligent, real-time membership and studio assistance for members and staff. It answers inquiries regarding studio policies, etiquette, tier benefits, pass validation, and renewal rules. When a member is logged in, it can also provide authenticated, real-time answers regarding their active plan status, remaining class balance, and expiration date.
 
-1. **Microservice Neural Model (`MemberPassGPT`)**:
-   - **Framework**: PyTorch (`torch.nn`) sequence model.
-   - **Architecture**: Token embedding layer (`nn.Embedding`), Gated Recurrent Unit core (`nn.GRU`, hidden dimension 256), and linear projection head (`nn.Linear`).
-   - **Serving**: FastAPI and Uvicorn running on port 8000 (`memberpass-ai/server.py`).
-   - **Dataset**: Domain FAQ covering studio facilities, pass validation, class etiquette, and renewal policies.
-2. **Deterministic Contextual Fallback Engine (`backend/routes/aiRoutes.js`)**:
-   - An Express orchestration layer that handles authenticated membership inquiries with strict data privacy gates.
-   - **Live Membership Status**: Fetches active plan, validity dates, and pass readiness for logged-in members.
-   - **Attendance History**: Aggregates verified check-in counts and remaining class allocations.
-   - **Expiry Calculations**: Formats Indian locale calendar renewal dates and days remaining.
-   - **Studio Policy Enforcement**: Enforces exact business rules (pause limits of 1–15 days, once per calendar year) without hallucination.
+### Exact Model & Architecture
+- **Custom-Trained PyTorch Model (`MemberPassGPT`)**: MemberPass uses a dedicated, custom sequence model built from scratch in PyTorch (`torch.nn`), defined in `memberpass-ai/models/model.py`.
+- **Model Architecture**: Token embedding layer (`nn.Embedding`), Gated Recurrent Unit recurrent core (`nn.GRU`, hidden dimension 256), and linear projection output head (`nn.Linear`).
+- **Training Dataset & Weights**: Trained specifically on yoga studio policies and domain FAQs (`memberpass-ai/data/memberpass_qa.jsonl`) with weights stored locally in `memberpass-ai/checkpoints/memberpass_model.pth`.
+- **Serving**: Hosted as a lightweight standalone microservice using FastAPI and Uvicorn on port 8000 (`memberpass-ai/server.py`).
+- **No External Free Model**: **No external third-party free or paid AI APIs (such as OpenAI GPT, Google Gemini, Groq, or Hugging Face free inference APIs) are used.** The model is entirely self-hosted and custom-trained.
+
+### What Happens When the AI Service Is Unavailable
+If the Python FastAPI microservice is offline, unstarted, or times out (>4000ms), the user **never experiences an error or service outage**. Instead, the Node.js Express backend (`backend/routes/aiRoutes.js`) automatically and transparently activates its built-in **Deterministic Contextual Fallback Engine**:
+1. **Live Database Integration**: For personal inquiries (*"check my status"*, *"how many classes have I attended?"*, *"when does my plan expire?"*), the Express backend verifies the user's JWT and queries live MongoDB collections (`Membership`, `Attendance`, `Plan`) to return 100% accurate, real-time data.
+2. **Policy Knowledge Fallback**: For studio policy questions (*"how to pause"*, *"what are the plans"*, *"how does QR check-in work"*), the backend provides verified, deterministic answers reflecting studio rules (e.g. 1–15 day pause limit, strictly once per calendar year).
+3. **Zero Hallucinations**: Critical membership and financial data are never fabricated or guessed.
 
 ---
 
@@ -123,24 +137,39 @@ MemberPass features a custom **Mediterranean Coastal Wellness** aesthetic design
 
 ---
 
-## 📊 Test Data Confirmation & Feature Completeness
+## What Works
+
+### Fully working
+- **User Authentication & RBAC**: JWT token issuing, bcrypt password hashing (cost factor 12), member and staff role-based route protection.
+- **Multiple Membership Tiers**: Basic (8 classes / 30 days), Standard (25 classes / 30 days), and Premium (Unlimited / 90 days).
+- **Razorpay Checkout (Test Mode)**: Order creation with plan price verification, timing-safe HMAC-SHA256 signature verification.
+- **Webhook Deduplication**: Webhook handling with unique `WebhookEvent` tracking preventing duplicate membership activations on network retries.
+- **Digital QR Passes**: High-entropy 64-hex character pass codes embedded in base64 DataURL QR codes omitting sensitive payment/user data.
+- **Staff QR Check-In Engine**: Real-time camera scanner (`html5-qrcode`) and manual pass code lookup with attendance history logging.
+- **Class Limit Enforcement & Rollback**: Automatic blocking when limits are reached, unlimited handling for Premium, and atomic rollback on database failure.
+- **Same-Day Attendance Idempotency**: Scanning a pass multiple times in one day permits studio entry without double-deducting class credits.
+- **Membership Pause Engine**: Allows active members to pause for 1–15 days once per calendar year with automatic forward `endDate` extension.
+- **Scheduled Background Jobs**: Auto-resumption of paused memberships and daily IST midnight expiry reminders with atomic mutex locking.
+- **Dual-Tier AI Assistant**: Custom PyTorch GRU model (`MemberPassGPT`) over FastAPI paired with an Express fallback engine.
+- **Staff Absentee Utilities**: Automated draft generation for members inactive for 14+ days.
+- **Mediterranean Coastal Wellness UI**: Responsive layout, non-blocking fonts/icons, responsive WebP hero image, and `React.lazy` code splitting.
+- **Automated Test Coverage**: 74 automated functional tests passing with 100% success rate.
+
+### Partly done
+- **Live Database Integration Test Suite (`backend/scripts/test-live-api.js`)**: The script code, dynamic member resolution, and scoped `finally` cleanup have been audited and verified via `node --check`, but live execution against the cloud MongoDB Atlas database was restricted inside local sandboxed environments due to network isolation.
+- **External Real-User Testing**: Initial peer evaluation sessions (10 entries) were conducted and documented in `docs/PLAN 2.pdf`; expanding these into broader multi-demographic external user testing is partially completed.
+
+### Skipped
+- **Live Production Razorpay Activation**: The platform operates strictly in Razorpay Sandbox / Test Mode (`rzp_test_...`). Real bank card charging and live merchant keys were intentionally deferred to avoid accidental financial charges during testing.
+- **Real SMS / WhatsApp Delivery Gateway**: Expiry reminders and pass links currently log to the console and database event tables rather than dispatching real SMS messages via paid third-party telecom APIs (e.g. Twilio).
+- **Physical Biometric / Turnstile Integration**: Studio entry uses digital QR scanning; integration with physical turnstile hardware was deferred for future phases.
+
+---
+
+## 📊 Test Data Confirmation
 
 > [!NOTE]
 > All members, attendance logs, and transactions in the seed environment are synthetic test datasets generated via `backend/scripts/seed.js`. Payments operate strictly under Razorpay Sandbox / Test Mode.
-
-### Feature Status Matrix
-
-| Feature | Status | Notes |
-| :--- | :---: | :--- |
-| **User Authentication & RBAC** | ✅ Working | JWT auth, bcrypt cost 12, member and staff roles |
-| **Razorpay Checkout & Webhooks** | ✅ Working | Test mode integration with HMAC-SHA256 verification and deduplication |
-| **QR Pass & Camera Check-in** | ✅ Working | Base64 QR payload generation, HTML5 camera scanner, code lookup |
-| **Class Limit & Rollback Safety** | ✅ Working | Enforces 8/25/unlimited limits with atomic rollback on failure |
-| **Membership Pause Engine** | ✅ Working | 1–15 day limits, 1/year frequency limit, auto-resume background job |
-| **AI Assistant & Domain Rules** | ✅ Working | PyTorch sequence model + deterministic Express fallback pipeline |
-| **Automated Expiry Reminders** | ✅ Working | Daily cron job with IST calendar calculations and atomic mutex locks |
-| **Live Production Payments** | ⏸️ Deferred | Configured for Razorpay Sandbox/Test keys; production credentials deferred |
-| **SMS / Push Gateway** | ⏸️ Deferred | Notifications simulated via terminal logging and database event logs |
 
 ---
 
@@ -219,7 +248,52 @@ Open the displayed local URL (typically `http://localhost:5173`) in your browser
 
 ---
 
-## 🧪 Testing & Verification
+## How to Run the Tests
+
+MemberPass includes 74 automated functional tests across 3 comprehensive suites, plus frontend linter and production build checks.
+
+### 1. Run Functional Test Suites (From Repository Root)
+
+Run the backend functional test suites directly from the project root directory:
+
+```bash
+# Suite 1: Razorpay Payment & Webhook Idempotency (35 tests)
+node backend/scripts/test-razorpay-suite.js
+
+# Suite 2: QR Pass Validation & Class Limit Enforcement (20 tests)
+node backend/scripts/test-qr-classlimit-suite.js
+
+# Suite 3: Core Functional & Membership Lifecycle Audit (19 tests)
+node backend/scripts/test-audit-suite.js
+```
+
+*(Alternatively, navigate to `cd backend` and run `node scripts/test-razorpay-suite.js`, etc.)*
+
+### 2. Run Frontend Linting & Build Verification
+
+Run static code hygiene and production asset compilation from the `frontend/` directory:
+
+```bash
+cd frontend
+
+# Run Oxlint static analysis
+npm run lint
+
+# Run Vite production build
+npm run build
+```
+
+### 3. Verify Live API Suite Syntax
+
+Verify the syntax and error-handling of the live HTTP integration test suite:
+
+```bash
+node --check backend/scripts/test-live-api.js
+```
+
+---
+
+## 🧪 Testing & Verification Summary
 
 MemberPass features an automated test suite across all critical business logic:
 
@@ -245,6 +319,21 @@ Observed metrics from a clean-incognito mobile audit run:
 | **Speed Index** | `2.4s` | Rapid visual completion |
 
 *(Note: These figures reflect one observed mobile run under simulated network conditions; individual scores may vary depending on device capabilities and network connection).*
+
+---
+
+## What I Would Do Differently With More Time
+
+*The following reflective prompts represent areas identified for architectural and personal refinement. Fill in with your personal insights:*
+
+1. **Earlier Integration Testing**:
+   - `[Your reflection: e.g., Set up end-to-end database mock fixtures and automated HTTP integration runs early in Milestone 1 rather than relying primarily on isolated functional unit test suites later in development.]`
+
+2. **Advanced Frontend State & Offline Caching**:
+   - `[Your reflection: e.g., Implement a service worker with offline IndexedDB caching for digital QR passes, allowing members to display their passes at the studio front desk even during intermittent mobile internet outages.]`
+
+3. **Multi-Location Studio Architecture**:
+   - `[Your reflection: e.g., Decouple studio branches into a multi-tenant schema with location-specific class schedules, room allocations, and centralized member pass quotas.]`
 
 ---
 
