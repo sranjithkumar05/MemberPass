@@ -264,6 +264,15 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
             <button
               type="button"
               className="demo-profile-chip"
+              onClick={() => handleDemoFill('naveen.member@test.com')}
+              title="Active Member (Naveen Kumar)"
+            >
+              <span className="demo-chip-role">Active Member</span>
+              <span className="demo-chip-name">Naveen Kumar</span>
+            </button>
+            <button
+              type="button"
+              className="demo-profile-chip"
               onClick={() => handleDemoFill('janani20@example.com')}
               title="Paused Basic member"
             >
