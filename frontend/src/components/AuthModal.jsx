@@ -96,14 +96,24 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
           ×
         </button>
 
-        {/* Modal Header */}
+        {/* Modal Header & Branding */}
         <div className="auth-header">
-          <div className="crest-mark crest-sm">
-            <span className="crest-monogram">M</span>
-            <span className="crest-sparkle">✦</span>
+          <div className="auth-brand-badge">
+            <span className="coastal-emblem-mini">
+              <svg viewBox="0 0 40 40" fill="none" className="emblem-svg-sm">
+                <circle cx="20" cy="20" r="19" fill="#F6F9F8" stroke="#B8D6DF" strokeWidth="1.5" />
+                <circle cx="20" cy="13" r="4.5" fill="#D98D70" />
+                <path d="M20 16C18.5 20 16.5 24 16.5 27C16.5 29 18 30.5 20 30.5C22 30.5 23.5 29 23.5 27C23.5 24 21.5 20 20 16Z" fill="#386D83" />
+                <path d="M16 21C12.5 22 9.5 25 10 28C11 30 13.5 30.5 15.5 29C17 28 17.5 24 16 21Z" fill="#386D83" opacity="0.8" />
+                <path d="M24 21C27.5 22 30.5 25 30 28C29 30 26.5 30.5 24.5 29C23 28 22.5 24 24 21Z" fill="#386D83" opacity="0.8" />
+                <path d="M12 32C15 33.5 25 33.5 28 32" stroke="#D98D70" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            </span>
+            <span className="auth-brand-name">Member<span>Pass</span></span>
           </div>
+
           <h2 className="auth-title">
-            {mode === 'login' ? 'Practitioner Member Access' : 'Join Our Yoga Sanctuary'}
+            {mode === 'login' ? 'Practitioner Access' : 'Join Our Sanctuary'}
           </h2>
           <p className="auth-subtitle">
             {mode === 'login'
@@ -111,9 +121,11 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
               : 'Create your account to unlock seamless class check-ins and membership passes.'}
           </p>
 
-          <div className="auth-tab-switch">
+          <div className="auth-tab-switch" role="tablist">
             <button
               type="button"
+              role="tab"
+              aria-selected={mode === 'login'}
               className={`auth-tab-btn ${mode === 'login' ? 'active' : ''}`}
               onClick={() => {
                 setMode('login');
@@ -124,6 +136,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
             </button>
             <button
               type="button"
+              role="tab"
+              aria-selected={mode === 'signup'}
               className={`auth-tab-btn ${mode === 'signup' ? 'active' : ''}`}
               onClick={() => {
                 setMode('signup');
@@ -154,7 +168,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
         <form onSubmit={handleSubmit} className="auth-form">
           {mode === 'signup' && (
             <div className="form-group">
-              <label htmlFor="auth-name">Full Name <span className="req">*</span></label>
+              <label htmlFor="auth-name">
+                Full Name <span className="req">*</span>
+              </label>
               <input
                 id="auth-name"
                 name="name"
@@ -168,7 +184,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
           )}
 
           <div className="form-group">
-            <label htmlFor="auth-email">Official Email <span className="req">*</span></label>
+            <label htmlFor="auth-email">
+              Official Email <span className="req">*</span>
+            </label>
             <input
               id="auth-email"
               name="email"
@@ -181,7 +199,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
           </div>
 
           <div className="form-group">
-            <label htmlFor="auth-password">Secret Password <span className="req">*</span></label>
+            <label htmlFor="auth-password">
+              Password <span className="req">*</span>
+            </label>
             <input
               id="auth-password"
               name="password"
@@ -210,7 +230,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
 
           <button
             type="submit"
-            className="btn-primary btn-block auth-submit-btn"
+            className="btn-primary auth-submit-btn"
             disabled={loading}
           >
             {loading ? (
@@ -224,47 +244,60 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
           </button>
         </form>
 
-        {/* Quick Demo Fill Buttons for Examiners & Testing */}
-        <div className="auth-demo-assist">
-          <span className="demo-label">Instant Testing Profiles:</span>
-          <div className="demo-buttons">
+        {/* Instant Testing Profiles Section */}
+        <div className="auth-demo-section">
+          <div className="auth-demo-header">
+            <span className="auth-demo-title">Instant Testing Profiles</span>
+            <span className="auth-demo-tag">1-Click Login</span>
+          </div>
+
+          <div className="demo-profiles-grid">
             <button
               type="button"
-              className="demo-pill"
+              className="demo-profile-chip"
               onClick={() => handleDemoFill('arun1@example.com')}
               title="Active Basic member with 8 classes used"
             >
-              Active Member (Arun - 8 classes)
+              <span className="demo-chip-role">Active Member</span>
+              <span className="demo-chip-name">Arun • 8 Classes</span>
             </button>
             <button
               type="button"
-              className="demo-pill"
+              className="demo-profile-chip"
               onClick={() => handleDemoFill('janani20@example.com')}
               title="Paused Basic member"
             >
-              Paused Member (Janani)
+              <span className="demo-chip-role">Paused Member</span>
+              <span className="demo-chip-name">Janani • On Hold</span>
             </button>
             <button
               type="button"
-              className="demo-pill"
+              className="demo-profile-chip"
               onClick={() => handleDemoFill('karthik3@example.com')}
               title="Active Premium VIP member"
             >
-              VIP Member (Karthik)
+              <span className="demo-chip-role">VIP Member</span>
+              <span className="demo-chip-name">Karthik • Unlimited</span>
             </button>
             <button
               type="button"
-              className="demo-pill"
+              className="demo-profile-chip demo-staff-chip"
               onClick={() => handleDemoFill('m2.staff@example.com')}
-              title="Official Staff Account"
+              title="Official Staff Portal Account"
             >
-              Staff Portal (m2.staff)
+              <span className="demo-chip-role">Staff Portal</span>
+              <span className="demo-chip-name">m2.staff • Scanner</span>
             </button>
           </div>
-          <span className="demo-hint">Universal Demo Password: MemberPass@123</span>
+
+          <div className="demo-hint-bar">
+            <span className="demo-hint-icon">🔒</span>
+            <span className="demo-hint-text">
+              Universal Demo Password: <code>MemberPass@123</code>
+            </span>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
