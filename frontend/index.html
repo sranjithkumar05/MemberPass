@@ -9,19 +9,21 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- CDN & Origin Preconnects -->
+    <!-- CDN & Origin Preconnects & DNS Prefetches -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
 
     <!-- Preload Hero LCP Image with exact matching responsive srcset and sizes -->
     <link
       rel="preload"
       as="image"
-      href="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80&fm=webp"
-      imagesrcset="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=480&q=70&fm=webp 480w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=75&fm=webp 800w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
-      imagesizes="(max-width: 768px) 100vw, 55vw"
+      href="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=75&fm=webp"
+      imagesrcset="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=480&q=70&fm=webp 480w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=640&q=72&fm=webp 640w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=75&fm=webp 800w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+      imagesizes="(max-width: 480px) 100vw, (max-width: 768px) 90vw, 55vw"
       fetchpriority="high"
     />
 
@@ -39,13 +41,15 @@
       />
     </noscript>
 
-    <!-- Font Awesome Icons (Non-blocking with noscript fallback) -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      media="print"
-      onload="this.media='all'"
-    />
+    <!-- Font Awesome Icons (Deferred to non-critical idle so LCP & TBT are unhindered) -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
+        document.head.appendChild(link);
+      });
+    </script>
     <noscript>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     </noscript>

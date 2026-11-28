@@ -214,4 +214,3 @@ The seed environment uses synthetic demo members and test records created for ap
 - **AI Notes:** `docs/AI_NOTES.md`
 - **Progress Log:** `docs/PROGRESS.md`
 
-**MemberPass – Smarter Membership. Better Experiences.**

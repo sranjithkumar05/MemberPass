@@ -1,9 +1,9 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
 import './App.css'
-import PlansSection from './components/PlansSection'
 import { getStoredUser, authApi } from './services/api'
 
-// Code-split non-critical views and modals to optimize initial landing bundle
+// Code-split non-critical views, sections, and modals to optimize initial landing bundle
+const PlansSection = lazy(() => import('./components/PlansSection'))
 const MemberDashboard = lazy(() => import('./components/MemberDashboard'))
 const StaffDashboard = lazy(() => import('./components/StaffDashboard'))
 const AIAssistantPage = lazy(() => import('./components/AIAssistantPage'))
@@ -49,10 +49,15 @@ export default function App() {
     )
   }
 
-  // Handle header blur on scroll
+  // Handle header blur on scroll (guarded against redundant state updates)
   useEffect(() => {
+    let lastScrolled = false
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+      const isScrolled = window.scrollY > 20
+      if (isScrolled !== lastScrolled) {
+        lastScrolled = isScrolled
+        setScrolled(isScrolled)
+      }
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -412,13 +417,14 @@ export default function App() {
                 <div className="hero-image-stage">
                   <div className="coastal-image-container">
                     <img
-                      src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80&fm=webp"
-                      srcSet="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=480&q=70&fm=webp 480w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=75&fm=webp 800w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
-                      sizes="(max-width: 768px) 100vw, 55vw"
+                      src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=75&fm=webp"
+                      srcSet="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=480&q=70&fm=webp 480w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=640&q=72&fm=webp 640w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=75&fm=webp 800w, https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+                      sizes="(max-width: 480px) 100vw, (max-width: 768px) 90vw, 55vw"
                       alt="Serene Mediterranean coastal yoga retreat in natural sunlight"
                       className="hero-retreat-photo"
                       loading="eager"
                       fetchPriority="high"
+                      decoding="async"
                       width="1200"
                       height="800"
                     />
@@ -776,14 +782,29 @@ export default function App() {
           {/* =========================================================================
             5. MEMBERSHIP PLANS SECTION (DYNAMIC M2 & RAZORPAY INTEGRATION)
             ========================================================================= */}
-          <PlansSection
-            currentUser={currentUser}
-            onRequireAuth={() => {
-              setAuthModalMode('login')
-              setAuthModalOpen(true)
-            }}
-            onPaymentSuccess={handlePaymentSuccess}
-          />
+          <Suspense fallback={
+            <section className="section-padding plans-section" id="plans">
+              <div className="section-header text-center">
+                <span className="section-kicker">MEMBERSHIP PLANS</span>
+                <h2 className="section-heading">Choose Your Wellness Membership</h2>
+                <p className="section-subtext">
+                  Transparent, flexible yoga membership plans tailored to your practice, class attendance, and wellness goals.
+                </p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
+                <div className="crest-spinner" aria-label="Loading plans..." />
+              </div>
+            </section>
+          }>
+            <PlansSection
+              currentUser={currentUser}
+              onRequireAuth={() => {
+                setAuthModalMode('login')
+                setAuthModalOpen(true)
+              }}
+              onPaymentSuccess={handlePaymentSuccess}
+            />
+          </Suspense>
 
           {/* =========================================================================
             6. TESTIMONIAL & TRUST SECTION
